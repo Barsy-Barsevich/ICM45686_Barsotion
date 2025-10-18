@@ -329,3 +329,21 @@ void icm45686_decode_fifo_depth(enum FIFO_DEPTH depth, FILE *stream, const char 
     }
     fprintf(stream, "\n");
 }
+
+void icm45686_decode_fifo_wr_wm_gt_th(enum FIFO_WR_WM_GT_TH cond, FILE *stream, const char *tag)
+{
+    fprintf(stream, "%s fifo write watermark interrupt generating condition: ", tag);
+    switch (cond)
+    {
+    case FIFO_WM_INT_IF_EQUAL:
+        fprintf(stream, "FIFO data count is equal to FIFO WM threshold");
+        break;
+    case FIFO_WM_INT_IF_GREATER_OR_EQUAL:
+        fprintf(stream, "FIFO data count is greater or equal to FIFO WM threshold");
+        break;
+    default:
+        fprintf(stream, "unexpected error (0b%b)", (int)cond);
+        break;
+    }
+    fprintf(stream, "\n");
+}

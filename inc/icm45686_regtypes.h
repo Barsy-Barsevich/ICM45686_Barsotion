@@ -84,3 +84,70 @@ typedef struct FIFO_CONFIG
     enum FIFO_MODE mode:2;
 };
 
+typedef struct FIFO_CONFIG2
+{
+    uint8_t __dummy1:3;
+    enum FIFO_WR_WM_GT_TH fifo_wm_int_condition:1;
+    uint8_t __dummy2:3;
+    uint8_t fifo_flush:1;
+};
+
+typedef struct FIFO_CONFIG3
+{
+    uint8_t fifo_data_insertion_en:1;
+    uint8_t fifo_accel_insertion_en:1;
+    uint8_t fifo_gyro_insertion_en:1;
+    uint8_t fifo_sensor_high_resolution_en:1;
+    uint8_t fifo_es0_insertion_en:1;
+    uint8_t fifo_es1_insertion_en:1;
+    uint8_t __dummy:2;
+};
+
+typedef struct FIFO_CONFIG4
+{
+    enum FIFO_ES0_6B_9B ext_sensor0_bytes:1;
+    uint8_t fifo_tmst_fsync_insertion_en:1;
+    uint8_t fifo_compression_en:1;
+    enum FIFO_COMP_NC_FLOW_CFG compression_algorithm:3;
+    uint8_t __dummy:2;
+};
+
+typedef struct TMST_WOM_CONFIG
+{
+    enum WOM_INT_DUR wom_int_duration:2;
+    uint8_t wom_interrupt_en:1;
+    enum WOM_MODE wom_mode:1;
+    enum TMST_RESOL tmst_resolution:1;
+    uint8_t tmst_delta_en:1;
+    uint8_t __dummy:1;
+};
+
+typedef struct FSYNC_CONFIG0
+{
+    enum AP_FSYNC_SEL fsync_tag_sensor:3;
+    enum AP_FSYNC_FLAG_CLEAR_SEL fsync_clear_policy:1;
+    uint8_t __dummy:4;
+};
+
+typedef struct FSYNC_CONFIG1
+{
+    enum AUX1_FSYNC_SEL fsync_tag_sensor:3;
+    enum AUX1_FSYNC_FLAG_CLEAR_SEL fsync_clear_policy:1;
+    uint8_t __dummy:4;
+};
+
+typedef struct RTC_CONFIG
+{
+    uint8_t __dummy1:5;
+    uint8_t rtc_func_en:1;
+    uint8_t rtc_realign:1;
+    uint8_t __dummy2:1;
+};
+
+typedef struct DMP_EXT_SEN_ODR_CFG
+{
+    enum APEX_ODR apex_odr:3;
+    enum I2CM_EXT_ODR i2cm_ext_odr:3;
+    uint8_t ext_sensor_en:1;
+    uint8_t __dummy:1;
+};
