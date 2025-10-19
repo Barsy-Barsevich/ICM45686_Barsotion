@@ -1,5 +1,9 @@
 #pragma once
 
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 #include <stdint.h>
 #include "icm45686_regconst.h"
 
@@ -240,3 +244,8 @@ typedef struct DRIVE_CONFIG0
     enum PADS_I2C_SLEW i2c_slew:3;
     uint8_t __dummy2:1;
 };
+
+
+#if defined(__cplusplus)
+}
+#endif

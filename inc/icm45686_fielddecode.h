@@ -1,5 +1,9 @@
 #pragma once
 
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 #include <stdio.h>
 #include "icm45686_regconst.h"
 
@@ -15,3 +19,7 @@ void icm45686_decode_gyro_odr(enum GYRO_ODR odr, FILE *stream, const char *tag);
 void icm45686_decode_fifo_mode(enum FIFO_MODE mode, FILE *stream, const char *tag);
 void icm45686_decode_fifo_depth(enum FIFO_DEPTH depth, FILE *stream, const char *tag);
 void icm45686_decode_fifo_wr_wm_gt_th(enum FIFO_WR_WM_GT_TH cond, FILE *stream, const char *tag);
+
+#if defined(__cplusplus)
+}
+#endif
