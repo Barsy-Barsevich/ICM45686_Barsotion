@@ -1,6 +1,6 @@
 #include "icm45686_fielddecode.h"
 
-void icm45686_decode_accel_mode(enum ACCEL_MODE mode, FILE *stream, const char *tag)
+void icm45686_decode_ACCEL_MODE(enum ACCEL_MODE mode, FILE *stream, const char *tag)
 {
     fprintf(stream, "%s accel mode: ", tag);
     switch (mode)
@@ -21,9 +21,9 @@ void icm45686_decode_accel_mode(enum ACCEL_MODE mode, FILE *stream, const char *
     fprintf(stream, "\n");
 }
 
-void icm45686_decode_gyro_mode(enum GYRO_MODE mode, FILE *stream, const char *tag)
+void icm45686_decode_GYRO_MODE(enum GYRO_MODE mode, FILE *stream, const char *tag)
 {
-    fprintf(stream, "%s gyro mode: ", tag);
+    fprintf(stream, "%s Gyro mode: ", tag);
     switch (mode)
     {
         case GYRO_MODE_OFF:
@@ -42,9 +42,9 @@ void icm45686_decode_gyro_mode(enum GYRO_MODE mode, FILE *stream, const char *ta
     fprintf(stream, "\n");
 }
 
-void icm45686_decode_int_polarity(enum INT_POLARITY pol, FILE *stream, const char *tag)
+void icm45686_decode_INT_POLARITY(enum INT_POLARITY pol, FILE *stream, const char *tag)
 {
-    fprintf(stream, "%s int polarity: ", tag);
+    fprintf(stream, "%s INT polarity: ", tag);
     switch (pol)
     {
     case INT_POLARITY_ACTIVE_LOW:
@@ -60,9 +60,9 @@ void icm45686_decode_int_polarity(enum INT_POLARITY pol, FILE *stream, const cha
     fprintf(stream, "\n");
 }
 
-void icm45686_decode_int_mode(enum INT_MODE mode, FILE *stream, const char *tag)
+void icm45686_decode_INT_MODE(enum INT_MODE mode, FILE *stream, const char *tag)
 {
-    fprintf(stream, "%s int mode: ", tag);
+    fprintf(stream, "%s INT mode: ", tag);
     switch (mode)
     {
     case INT_MODE_LATCH:
@@ -78,9 +78,9 @@ void icm45686_decode_int_mode(enum INT_MODE mode, FILE *stream, const char *tag)
     fprintf(stream, "\n");
 }
 
-void icm45686_decode_int_drive(enum INT_DRIVE drive, FILE *stream, const char *tag)
+void icm45686_decode_INT_DRIVE(enum INT_DRIVE drive, FILE *stream, const char *tag)
 {
-    fprintf(stream, "%s int drive: ", tag);
+    fprintf(stream, "%s INT drive: ", tag);
     switch (drive)
     {
     case INT_DRIVE_PUSH_PULL:
@@ -96,29 +96,29 @@ void icm45686_decode_int_drive(enum INT_DRIVE drive, FILE *stream, const char *t
     fprintf(stream, "\n");
 }
 
-void icm45686_decode_accel_scale(enum ACCEL_UI_FS_SEL scale, FILE *stream, const char *tag)
+void icm45686_decode_ACCEL_UI_FS_SEL(enum ACCEL_UI_FS_SEL scale, FILE *stream, const char *tag)
 {
     fprintf(stream, "%s accel scale: ", tag);
     switch (scale)
     {
-    case ACCEL_SCALE_32G:
+    case ACCEL_UI_SCALE_32G:
         fprintf(stream, "32g");
         break;
-    case ACCEL_SCALE_16G:
+    case ACCEL_UI_SCALE_16G:
         fprintf(stream, "16g");
         break;
-    case ACCEL_SCALE_8G:
+    case ACCEL_UI_SCALE_8G:
         fprintf(stream, "8g");
         break;
-    case ACCEL_SCALE_4G:
+    case ACCEL_UI_SCALE_4G:
         fprintf(stream, "4g");
         break;
-    case ACCEL_SCALE_2G:
+    case ACCEL_UI_SCALE_2G:
         fprintf(stream, "2g");
         break;
-    case _ACCEL_SCALE_RES1:
-    case _ACCEL_SCALE_RES2:
-    case _ACCEL_SCALE_RES3:
+    case _ACCEL_UI_SCALE_RES1:
+    case _ACCEL_UI_SCALE_RES2:
+    case _ACCEL_UI_SCALE_RES3:
         fprintf(stream, "reserved (0b%03b)", (int)scale);
         break;
     default:
@@ -128,7 +128,7 @@ void icm45686_decode_accel_scale(enum ACCEL_UI_FS_SEL scale, FILE *stream, const
     fprintf(stream, "\n");
 }
 
-void icm45686_decode_accel_odr(enum ACCEL_ODR odr, FILE *stream, const char *tag)
+void icm45686_decode_ACCEL_ODR(enum ACCEL_ODR odr, FILE *stream, const char *tag)
 {
     fprintf(stream, "%s accel odr: ", tag);
     switch (odr)
@@ -184,45 +184,45 @@ void icm45686_decode_accel_odr(enum ACCEL_ODR odr, FILE *stream, const char *tag
     fprintf(stream, "\n");
 }
 
-void icm45686_decode_gyro_scale(enum GYRO_UI_FS_SEL scale, FILE *stream, const char *tag)
+void icm45686_decode_GYRO_UI_FS_SEL(enum GYRO_UI_FS_SEL scale, FILE *stream, const char *tag)
 {
     fprintf(stream, "%s gyro scale: ", tag);
     switch (scale)
     {
-    case GYRO_SCALE_4000DPS:
+    case GYRO_UI_SCALE_4000DPS:
         fprintf(stream, "4000 dps");
         break;
-    case GYRO_SCALE_2000DPS:
-        fprintf(stream, "4000 dps");
+    case GYRO_UI_SCALE_2000DPS:
+        fprintf(stream, "2000 dps");
         break;
-    case GYRO_SCALE_1000DPS:
-        fprintf(stream, "4000 dps");
+    case GYRO_UI_SCALE_1000DPS:
+        fprintf(stream, "1000 dps");
         break;
-    case GYRO_SCALE_500DPS:
-        fprintf(stream, "4000 dps");
+    case GYRO_UI_SCALE_500DPS:
+        fprintf(stream, "500 dps");
         break;
-    case GYRO_SCALE_250DPS:
-        fprintf(stream, "4000 dps");
+    case GYRO_UI_SCALE_250DPS:
+        fprintf(stream, "250 dps");
         break;
-    case GYRO_SCALE_125DPS:
-        fprintf(stream, "4000 dps");
+    case GYRO_UI_SCALE_125DPS:
+        fprintf(stream, "125 dps");
         break;
-    case GYRO_SCALE_62P5DPS:
-        fprintf(stream, "4000 dps");
+    case GYRO_UI_SCALE_62P5DPS:
+        fprintf(stream, "62.5 dps");
         break;
-    case GYRO_SCALE_31P25DPS:
-        fprintf(stream, "4000 dps");
+    case GYRO_UI_SCALE_31P25DPS:
+        fprintf(stream, "31.25 dps");
         break;
-    case GYRO_SCALE_15P625DPS:
-        fprintf(stream, "4000 dps");
+    case GYRO_UI_SCALE_15P625DPS:
+        fprintf(stream, "15.625 dps");
         break;
-    case _GYRO_SCALE_RES1:
-    case _GYRO_SCALE_RES2:
-    case _GYRO_SCALE_RES3:
-    case _GYRO_SCALE_RES4:
-    case _GYRO_SCALE_RES5:
-    case _GYRO_SCALE_RES6:
-    case _GYRO_SCALE_RES7:
+    case _GYRO_UI_SCALE_RES1:
+    case _GYRO_UI_SCALE_RES2:
+    case _GYRO_UI_SCALE_RES3:
+    case _GYRO_UI_SCALE_RES4:
+    case _GYRO_UI_SCALE_RES5:
+    case _GYRO_UI_SCALE_RES6:
+    case _GYRO_UI_SCALE_RES7:
         fprintf(stream, "reserved (0b%04b)", (int)scale);
         break;
     default:
@@ -232,7 +232,7 @@ void icm45686_decode_gyro_scale(enum GYRO_UI_FS_SEL scale, FILE *stream, const c
     fprintf(stream, "\n");
 }
 
-void icm45686_decode_gyro_odr(enum GYRO_ODR odr, FILE *stream, const char *tag)
+void icm45686_decode_GYRO_ODR(enum GYRO_ODR odr, FILE *stream, const char *tag)
 {
     fprintf(stream, "%s gyro odr: ", tag);
     switch (odr)
@@ -288,7 +288,7 @@ void icm45686_decode_gyro_odr(enum GYRO_ODR odr, FILE *stream, const char *tag)
     fprintf(stream, "\n");
 }
 
-void icm45686_decode_fifo_mode(enum FIFO_MODE mode, FILE *stream, const char *tag)
+void icm45686_decode_FIFO_MODE(enum FIFO_MODE mode, FILE *stream, const char *tag)
 {
     fprintf(stream, "%s fifo mode: ", tag);
     switch (mode)
@@ -312,7 +312,7 @@ void icm45686_decode_fifo_mode(enum FIFO_MODE mode, FILE *stream, const char *ta
     fprintf(stream, "\n");
 }
 
-void icm45686_decode_fifo_depth(enum FIFO_DEPTH depth, FILE *stream, const char *tag)
+void icm45686_decode_FIFO_DEPTH(enum FIFO_DEPTH depth, FILE *stream, const char *tag)
 {
     fprintf(stream, "%s fifo depth: ", tag);
     switch (depth)
@@ -330,7 +330,7 @@ void icm45686_decode_fifo_depth(enum FIFO_DEPTH depth, FILE *stream, const char 
     fprintf(stream, "\n");
 }
 
-void icm45686_decode_fifo_wr_wm_gt_th(enum FIFO_WR_WM_GT_TH cond, FILE *stream, const char *tag)
+void icm45686_decode_FIFO_WR_WM_GT_TH(enum FIFO_WR_WM_GT_TH cond, FILE *stream, const char *tag)
 {
     fprintf(stream, "%s fifo write watermark interrupt generating condition: ", tag);
     switch (cond)
@@ -348,7 +348,7 @@ void icm45686_decode_fifo_wr_wm_gt_th(enum FIFO_WR_WM_GT_TH cond, FILE *stream, 
     fprintf(stream, "\n");
 }
 
-void icm45686_decode_fifo_ext_sensor0_bytes(enum FIFO_ES0_6B_9B bytes, FILE *stream, const char *tag)
+void icm45686_decode_FIFO_ES0_6B_9B(enum FIFO_ES0_6B_9B bytes, FILE *stream, const char *tag)
 {
     fprintf(stream, "%s fifo external sensor0 bytes: ", tag);
     switch (bytes)
@@ -593,7 +593,7 @@ void icm45686_decode_APEX_ODR(enum APEX_ODR odr, FILE *stream, const char *tag)
         break;
     case _APEX_ODR_RES1:
     case _APEX_ODR_RES2:
-        fprintf(stream, "reserved (0b%b)", (int)odr);
+        fprintf(stream, "reserved (0b%03b)", (int)odr);
         break;
     default:
         fprintf(stream, "unexpected error (0b%b)", (int)odr);
@@ -685,10 +685,452 @@ void icm45686_decode_ACCEL_FIFO_ODR_DEC(enum ACCEL_FIFO_ODR_DEC dec, FILE *strea
     case _ACCEL_FIFO_ODR_DEC_RES1:
     case _ACCEL_FIFO_ODR_DEC_RES2:
     case _ACCEL_FIFO_ODR_DEC_RES3:
-        fprintf(stream, "reserved (0b%b)", (int)dec);
+        fprintf(stream, "reserved (0b%04b)", (int)dec);
         break;
     default:
         fprintf(stream, "unexpected error (0b%b)", (int)dec);
+        break;
+    }
+    fprintf(stream, "\n");
+}
+
+void icm45686_decode_GYRO_FIFO_ODR_DEC(enum GYRO_FIFO_ODR_DEC dec, FILE *stream, const char *tag)
+{
+    fprintf(stream, "%s Gyro FIFO ODR decimation: ", tag);
+    switch (dec)
+    {
+    case GYRO_FIFO_ODR_DEC_1:
+        fprintf(stream, "1 (disabled)");
+        break;
+    case GYRO_FIFO_ODR_DEC_2:
+        fprintf(stream, "2");
+        break;
+    case GYRO_FIFO_ODR_DEC_4:
+        fprintf(stream, "4");
+        break;
+    case GYRO_FIFO_ODR_DEC_8:
+        fprintf(stream, "8");
+        break;
+    case GYRO_FIFO_ODR_DEC_16:
+        fprintf(stream, "16");
+        break;
+    case GYRO_FIFO_ODR_DEC_32:
+        fprintf(stream, "32");
+        break;
+    case GYRO_FIFO_ODR_DEC_64:
+        fprintf(stream, "64");
+        break;
+    case GYRO_FIFO_ODR_DEC_128:
+        fprintf(stream, "128");
+        break;
+    case GYRO_FIFO_ODR_DEC_256:
+        fprintf(stream, "256");
+        break;
+    case GYRO_FIFO_ODR_DEC_512:
+        fprintf(stream, "512");
+        break;
+    case GYRO_FIFO_ODR_DEC_1024:
+        fprintf(stream, "1024");
+        break;
+    case GYRO_FIFO_ODR_DEC_2048:
+        fprintf(stream, "2048");
+        break;
+    case GYRO_FIFO_ODR_DEC_4096:
+        fprintf(stream, "4096");
+        break;
+    case _GYRO_FIFO_ODR_DEC_RES1:
+    case _GYRO_FIFO_ODR_DEC_RES2:
+    case _GYRO_FIFO_ODR_DEC_RES3:
+        fprintf(stream, "reserved (0b%04b)", (int)dec);
+        break;
+    default:
+        fprintf(stream, "unexpected error (0b%b)", (int)dec);
+        break;
+    }
+    fprintf(stream, "\n");
+}
+
+void icm45686_decode_AP_SPI_MODE(enum AP_SPI_MODE mode, FILE *stream, const char *tag)
+{
+    fprintf(stream, "%s AP/UI SPI mode: ", tag);
+    switch (mode)
+    {
+    case AP_SPI_MODE_0_3:
+        fprintf(stream, "0 or 3");
+        break;
+    case AP_SPI_MODE_1_2:
+        fprintf(stream, "1 or 2");
+        break;
+    default:
+        fprintf(stream, "unexpected error (0b%b)", (int)mode);
+        break;
+    }
+    fprintf(stream, "\n");
+}
+
+void icm45686_decode_AP_SPI_34_MODE(enum AP_SPI_34_MODE mode, FILE *stream, const char *tag)
+{
+    fprintf(stream, "%s AP/UI SPI wire mode: ", tag);
+    switch (mode)
+    {
+    case AP_SPI_34_MODE_3WIRE:
+        fprintf(stream, "3 wire");
+        break;
+    case AP_SPI_34_MODE_4WIRE:
+        fprintf(stream, "4 wire");
+        break;
+    default:
+        fprintf(stream, "unexpected error (0b%b)", (int)mode);
+        break;
+    }
+    fprintf(stream, "\n");
+}
+
+void icm45686_decode_AP_SPI_MODE_OVRD_VAL(enum AP_SPI_MODE_OVRD_VAL mode, FILE *stream, const char *tag)
+{
+    fprintf(stream, "%s AP/UI SPI mode override value: ", tag);
+    switch (mode)
+    {
+    case AP_SPI_MODE_OVRD_VAL_0_3:
+        fprintf(stream, "0 or 3");
+        break;
+    case AP_SPI_MODE_OVRD_VAL_1_2:
+        fprintf(stream, "1 or 2");
+        break;
+    default:
+        fprintf(stream, "unexpected error (0b%b)", (int)mode);
+        break;
+    }
+    fprintf(stream, "\n");
+}
+
+void icm45686_decode_AP_SPI_34_MODE_OVRD_VAL(enum AP_SPI_34_MODE_OVRD_VAL mode, FILE *stream, const char *tag)
+{
+    fprintf(stream, "%s AP/UI SPI wire mode override value: ", tag);
+    switch (mode)
+    {
+    case AP_SPI_34_MODE_OVRD_VAL_3WIRE:
+        fprintf(stream, "3 wire");
+        break;
+    case AP_SPI_34_MODE_OVRD_VAL_4WIRE:
+        fprintf(stream, "4 wire");
+        break;
+    default:
+        fprintf(stream, "unexpected error (0b%b)", (int)mode);
+        break;
+    }
+    fprintf(stream, "\n");
+}
+
+void icm45686_decode_AUX1_SPI_MODE(enum AUX1_SPI_MODE mode, FILE *stream, const char *tag)
+{
+    fprintf(stream, "%s AUX1 SPI mode: ", tag);
+    switch (mode)
+    {
+    case AUX1_SPI_MODE_0_3:
+        fprintf(stream, "0 or 3");
+        break;
+    case AUX1_SPI_MODE_1_2:
+        fprintf(stream, "1 or 2");
+        break;
+    default:
+        fprintf(stream, "unexpected error (0b%b)", (int)mode);
+        break;
+    }
+    fprintf(stream, "\n");
+}
+
+void icm45686_decode_AUX1_SPI_34_MODE(enum AUX1_SPI_34_MODE mode, FILE *stream, const char *tag)
+{
+    fprintf(stream, "%s AUX1 SPI wire mode: ", tag);
+    switch (mode)
+    {
+    case AUX1_SPI_34_MODE_3WIRE:
+        fprintf(stream, "3 wire");
+        break;
+    case AUX1_SPI_34_MODE_4WIRE:
+        fprintf(stream, "4 wire");
+        break;
+    default:
+        fprintf(stream, "unexpected error (0b%b)", (int)mode);
+        break;
+    }
+    fprintf(stream, "\n");
+}
+
+void icm45686_decode_PADS_SPI_SLEW(enum PADS_SPI_SLEW slew, FILE *stream, const char *tag)
+{
+    fprintf(stream, "%s AP/UI SPI slew: ", tag);
+    switch (slew)
+    {
+    case PADS_SPI_SLEW_38NS:
+        fprintf(stream, "38ns");
+        break;
+    case PADS_SPI_SLEW_14NS:
+        fprintf(stream, "14ns");
+        break;
+    case PADS_SPI_SLEW_10NS:
+        fprintf(stream, "10ns");
+        break;
+    case PADS_SPI_SLEW_7NS:
+        fprintf(stream, "7ns");
+        break;
+    case PADS_SPI_SLEW_5NS:
+        fprintf(stream, "5ns");
+        break;
+    case PADS_SPI_SLEW_4NS:
+        fprintf(stream, "4ns");
+        break;
+    case PADS_SPI_SLEW_0P5NS:
+    case _PADS_SPI_SLEW_0P5NS_2:
+        fprintf(stream, "0.5ns");
+        break;
+    default:
+        fprintf(stream, "unexpected error (0b%b)", (int)slew);
+        break;
+    }
+    fprintf(stream, "\n");
+}
+
+void icm45686_decode_PADS_I2C_SLEW(enum PADS_I2C_SLEW slew, FILE *stream, const char *tag)
+{
+    fprintf(stream, "%s AP/UI I2C slew: ", tag);
+    switch (slew)
+    {
+    case PADS_I2C_SLEW_20NS:
+        fprintf(stream, "20ns");
+        break;
+    case PADS_I2C_SLEW_7NS:
+        fprintf(stream, "7ns");
+        break;
+    case _PADS_I2C_SLEW_RES1:
+    case _PADS_I2C_SLEW_RES2:
+    case _PADS_I2C_SLEW_RES3:
+    case _PADS_I2C_SLEW_RES4:
+    case _PADS_I2C_SLEW_RES5:
+    case _PADS_I2C_SLEW_RES6:
+        fprintf(stream, "reserved (0b%03b)", (int)slew);
+        break;
+    default:
+        fprintf(stream, "unexpected error (0b%b)", (int)slew);
+        break;
+    }
+    fprintf(stream, "\n");
+}
+
+void icm45686_decode_PADS_I3C_SDR_SLEW(enum PADS_I3C_SDR_SLEW slew, FILE *stream, const char *tag)
+{
+    fprintf(stream, "%s AP/UI I3C SDR slew: ", tag);
+    switch (slew)
+    {
+    case PADS_I3C_SDR_SLEW_38NS:
+        fprintf(stream, "38ns");
+        break;
+    case PADS_I3C_SDR_SLEW_14NS:
+        fprintf(stream, "14ns");
+        break;
+    case PADS_I3C_SDR_SLEW_10NS:
+        fprintf(stream, "10ns");
+        break;
+    case PADS_I3C_SDR_SLEW_7NS:
+        fprintf(stream, "7ns");
+        break;
+    case PADS_I3C_SDR_SLEW_5NS:
+        fprintf(stream, "5ns");
+        break;
+    case PADS_I3C_SDR_SLEW_4NS:
+        fprintf(stream, "4ns");
+        break;
+    case PADS_I3C_SDR_SLEW_0P5NS:
+    case _PADS_I3C_SDR_SLEW_0P5NS_2:
+        fprintf(stream, "0.5ns");
+        break;
+    default:
+        fprintf(stream, "unexpected error (0b%b)", (int)slew);
+        break;
+    }
+    fprintf(stream, "\n");
+}
+
+void icm45686_decode_PADS_I3C_DDR_SLEW(enum PADS_I3C_DDR_SLEW slew, FILE *stream, const char *tag)
+{
+    fprintf(stream, "%s AP/UI I3C DDR slew: ", tag);
+    switch (slew)
+    {
+    case PADS_I3C_DDR_SLEW_38NS:
+        fprintf(stream, "38ns");
+        break;
+    case PADS_I3C_DDR_SLEW_14NS:
+        fprintf(stream, "14ns");
+        break;
+    case PADS_I3C_DDR_SLEW_10NS:
+        fprintf(stream, "10ns");
+        break;
+    case PADS_I3C_DDR_SLEW_7NS:
+        fprintf(stream, "7ns");
+        break;
+    case PADS_I3C_DDR_SLEW_5NS:
+        fprintf(stream, "5ns");
+        break;
+    case PADS_I3C_DDR_SLEW_4NS:
+        fprintf(stream, "4ns");
+        break;
+    case PADS_I3C_DDR_SLEW_0P5NS:
+    case _PADS_I3C_DDR_SLEW_0P5NS_2:
+        fprintf(stream, "0.5ns");
+        break;
+    default:
+        fprintf(stream, "unexpected error (0b%b)", (int)slew);
+        break;
+    }
+    fprintf(stream, "\n");
+}
+
+void icm45686_decode_PADS_SLEW(enum PADS_SLEW slew, FILE *stream, const char *tag)
+{
+    fprintf(stream, "%s INT1 slew: ", tag);
+    switch (slew)
+    {
+    case PADS_INT1_SLEW_38NS:
+        fprintf(stream, "38ns");
+        break;
+    case PADS_INT1_SLEW_14NS:
+        fprintf(stream, "14ns");
+        break;
+    case PADS_INT1_SLEW_10NS:
+        fprintf(stream, "10ns");
+        break;
+    case PADS_INT1_SLEW_7NS:
+        fprintf(stream, "7ns");
+        break;
+    case PADS_INT1_SLEW_5NS:
+        fprintf(stream, "5ns");
+        break;
+    case PADS_INT1_SLEW_4NS:
+        fprintf(stream, "4ns");
+        break;
+    case PADS_INT1_SLEW_0P5NS:
+    case _PADS_INT1_SLEW_0P5NS_2:
+        fprintf(stream, "0.5ns");
+        break;
+    default:
+        fprintf(stream, "unexpected error (0b%b)", (int)slew);
+        break;
+    }
+    fprintf(stream, "\n");
+}
+
+void icm45686_decode_OSC_ID_OVRD(enum OSC_ID_OVRD osc, FILE *stream, const char *tag)
+{
+    fprintf(stream, "%s MCLK clock source: ", tag);
+    switch (osc)
+    {
+    case MCLK_SOURCE_INTERNAL_LOGIC:
+        fprintf(stream, "Internal logic");
+        break;
+    case MCLK_SOURCE_INTERNAL_OSCILLATOR:
+        fprintf(stream, "Internal oscillator");
+        break;
+    case MCLK_SOURCE_EXTERNAL_CLOCK:
+        fprintf(stream, "External clock");
+        break;
+    case _MCLK_SOURCE_RES1:
+    case _MCLK_SOURCE_RES2:
+    case _MCLK_SOURCE_RES3:
+    case _MCLK_SOURCE_RES4:
+    case _MCLK_SOURCE_RES5:
+    case _MCLK_SOURCE_RES6:
+    case _MCLK_SOURCE_RES7:
+    case _MCLK_SOURCE_RES8:
+    case _MCLK_SOURCE_RES9:
+    case _MCLK_SOURCE_RES10:
+    case _MCLK_SOURCE_RES11:
+    case _MCLK_SOURCE_RES12:
+    case _MCLK_SOURCE_RES13:
+        fprintf(stream, "reserved (0b%04b)", (int)osc);
+        break;
+    default:
+        fprintf(stream, "unexpected error (0b%b)", (int)osc);
+        break;
+    }
+    fprintf(stream, "\n");
+}
+
+void icm45686_decode_ACCEL_AUX1_FS_SEL(enum ACCEL_AUX1_FS_SEL scale, FILE *stream, const char *tag)
+{
+    fprintf(stream, "%s AUX1 Accel scale: ", tag);
+    switch (scale)
+    {
+    case ACCEL_AUX1_SCALE_32G:
+        fprintf(stream, "32g");
+        break;
+    case ACCEL_AUX1_SCALE_16G:
+        fprintf(stream, "16g");
+        break;
+    case ACCEL_AUX1_SCALE_8G:
+        fprintf(stream, "8g");
+        break;
+    case ACCEL_AUX1_SCALE_4G:
+        fprintf(stream, "4g");
+        break;
+    case ACCEL_AUX1_SCALE_2G:
+        fprintf(stream, "2g");
+        break;
+    case _ACCEL_AUX1_SCALE_RES1:
+    case _ACCEL_AUX1_SCALE_RES2:
+    case _ACCEL_AUX1_SCALE_RES3:
+        fprintf(stream, "reserved (0b%03b)", (int)scale);
+        break;
+    default:
+        fprintf(stream, "unexpected error (0b%b)", (int)scale);
+        break;
+    }
+    fprintf(stream, "\n");
+}
+
+void icm45686_decode_GYRO_AUX1_FS_SEL(enum GYRO_AUX1_FS_SEL sel, FILE *stream, const char *tag)
+{
+    fprintf(stream, "%s AUX1 Gyro scale: ", tag);
+    switch (sel)
+    {
+    case GYRO_AUX1_SCALE_4000DPS:
+        fprintf(stream, "4000 dps");
+        break;
+    case GYRO_AUX1_SCALE_2000DPS:
+        fprintf(stream, "2000 dps");
+        break;
+    case GYRO_AUX1_SCALE_1000DPS:
+        fprintf(stream, "1000 dps");
+        break;
+    case GYRO_AUX1_SCALE_500DPS:
+        fprintf(stream, "500 dps");
+        break;
+    case GYRO_AUX1_SCALE_250DPS:
+        fprintf(stream, "250 dps");
+        break;
+    case GYRO_AUX1_SCALE_125DPS:
+        fprintf(stream, "125 dps");
+        break;
+    case GYRO_AUX1_SCALE_62P5DPS:
+        fprintf(stream, "62.5 dps");
+        break;
+    case GYRO_AUX1_SCALE_31P25DPS:
+        fprintf(stream, "31.25 dps");
+        break;
+    case GYRO_AUX1_SCALE_15P625DPS:
+        fprintf(stream, "15.625 dps");
+        break;
+    case _GYRO_AUX1_SCALE_RES1:
+    case _GYRO_AUX1_SCALE_RES2:
+    case _GYRO_AUX1_SCALE_RES3:
+    case _GYRO_AUX1_SCALE_RES4:
+    case _GYRO_AUX1_SCALE_RES5:
+    case _GYRO_AUX1_SCALE_RES6:
+    case _GYRO_AUX1_SCALE_RES7:
+        fprintf(stream, "reserved (0b%04b)", (int)sel);
+        break;
+    default:
+        fprintf(stream, "unexpected error (0b%b)", (int)sel);
         break;
     }
     fprintf(stream, "\n");
