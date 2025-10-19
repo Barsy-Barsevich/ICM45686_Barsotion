@@ -151,3 +151,92 @@ typedef struct DMP_EXT_SEN_ODR_CFG
     uint8_t ext_sensor_en:1;
     uint8_t __dummy:1;
 };
+
+typedef struct ODR_DECIMATE_CONFIG
+{
+    enum ACCEL_FIFO_ODR_DEC accel_decimate:4;
+    enum GYRO_FIFO_ODR_DEC gyro_decimate:4;
+};
+
+typedef struct EDMP_APEX_EN0
+{
+    uint8_t tap_en:1;
+    uint8_t __dummy:2;
+    uint8_t tilt_en:1;
+    uint8_t pedometer_en:1;
+    uint8_t freefall_en:1;
+    uint8_t raise_to_wake_en:1;
+    uint8_t smd_en:1;
+};
+
+typedef struct EDMP_APEX_EN1
+{
+    uint8_t soft_hard_iron_correction_en:1;
+    uint8_t init_en:1;
+    uint8_t power_save_en:1;
+    uint8_t __dummy1:2;
+    uint8_t feature3_en:1;
+    uint8_t edmp_en:1;
+    uint8_t __dummy2:1;
+};
+
+typedef struct APEX_BUFFER_MGMT
+{
+    uint8_t step_count_edmp_addr:1;
+    uint8_t step_count_edmp_size:1;
+    uint8_t step_count_host_addr:1;
+    uint8_t step_count_host_size:1;
+    uint8_t freefall_edmp_addr:1;
+    uint8_t freefall_edmp_size:1;
+    uint8_t freefall_host_addr:1;
+    uint8_t freefall_host_size:1;
+};
+
+typedef struct INTF_CONFIG0
+{
+    enum AP_SPI_MODE spi_mode:1;
+    enum AP_SPI_34_MODE spi_wire_mode:1;
+    uint8_t __dummy1:3;
+    uint8_t virtual_access_aux1_en:1;
+    uint8_t __dummy2:2;
+};
+
+typedef struct INTF_CONFIG1_OVRD
+{
+    enum AP_SPI_MODE_OVRD_VAL spi_mode_override:1;
+    uint8_t spi_mode_override_en:1;
+    enum AP_SPI_34_MODE_OVRD_VAL spi_wire_mode_override:1;
+    uint8_t spi_wire_mode_override_en:1;
+    uint8_t __dummy:4;
+};
+
+typedef struct INTF_AUX_CONFIG
+{
+    enum AUX1_SPI_MODE spi_mode:1;
+    enum AUX1_SPI_34_MODE spi_wire_mode:1;
+    uint8_t __dummy:6;
+};
+
+typedef struct IOC_PAD_SCENARIO
+{
+    uint8_t aux1_en:1;
+    enum AUX1_MODE aux1_mode:2;
+    uint8_t __dummy:5;
+};
+
+typedef struct IOC_PAD_SCENARIO_AUX_OVRD
+{
+    uint8_t aux1_en_override:1;
+    uint8_t aux1_en_override_en:1;
+    enum AUX1_MODE_OVRD_VAL aux1_mode_override:2;
+    uint8_t aux1_mode_override_en:1;
+    uint8_t __dummy:3;
+};
+
+typedef struct DRIVE_CONFIG0
+{
+    uint8_t __dummy1:1;
+    enum PADS_SPI_SLEW spi_slew:3;
+    enum PADS_I2C_SLEW i2c_slew:3;
+    uint8_t __dummy2:1;
+};
