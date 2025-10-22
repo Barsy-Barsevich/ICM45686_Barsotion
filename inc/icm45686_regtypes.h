@@ -82,11 +82,11 @@ typedef struct GYRO_CONFIG0
     enum GYRO_UI_FS_SEL scale:4;
 } GYRO_CONFIG0_t;
 
-typedef struct FIFO_CONFIG
+typedef struct FIFO_CONFIG0
 {
     enum FIFO_DEPTH fifo_depth:6;
     enum FIFO_MODE mode:2;
-} FIFO_CONFIG_t;
+} FIFO_CONFIG0_t;
 
 typedef struct FIFO_CONFIG2
 {
