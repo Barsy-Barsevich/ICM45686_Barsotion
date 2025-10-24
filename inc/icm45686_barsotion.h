@@ -5,6 +5,7 @@ extern "C" {
 #endif
 
 #include <stdbool.h>
+#include <stddef.h>
 #include "icm45686_regconst.h"
 #include "icm45686_types.h"
 
@@ -93,6 +94,12 @@ int icm45686_set_fifo_depth(struct icm45686_desc *desc, const enum FIFO_DEPTH de
 int icm45686_get_fifo_depth(struct icm45686_desc *desc, enum FIFO_DEPTH *depth);
 int icm45686_set_fifo_mode(struct icm45686_desc *desc, const enum FIFO_MODE mode);
 int icm45686_get_fifo_mode(struct icm45686_desc *desc, enum FIFO_MODE *mode);
+int icm45686_set_fifo_watermark(struct icm45686_desc *desc, uint16_t watermark);
+int icm45686_get_fifo_watermark(struct icm45686_desc *desc, uint16_t *watermark);
+int icm45686_fifo_flush(struct icm45686_desc *desc);
+int icm45686_set_fifo_watermark_mode(struct icm45686_desc *desc, enum FIFO_WR_WM_GT_TH mode);
+int icm45686_get_fifo_watermark_mode(struct icm45686_desc *desc, enum FIFO_WR_WM_GT_TH *mode);
+
 
 #if defined(__cplusplus)
 }

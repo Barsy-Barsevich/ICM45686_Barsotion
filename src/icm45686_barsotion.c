@@ -9,6 +9,7 @@
 
 int icm45686_set_accel_mode(struct icm45686_desc *desc, const enum ACCEL_MODE mode)
 {
+    if (desc == NULL) return 1;
     PWR_MGMT0_t pwr_mgmt0;
     _ROE(_read_register(PWR_MGMT0, (uint8_t*)&pwr_mgmt0, 1));
     pwr_mgmt0.accel_mode = mode;
@@ -18,6 +19,7 @@ int icm45686_set_accel_mode(struct icm45686_desc *desc, const enum ACCEL_MODE mo
 
 int icm45686_get_accel_mode(struct icm45686_desc *desc, enum ACCEL_MODE *mode)
 {
+    if (desc == NULL || mode == NULL) return 1;
     PWR_MGMT0_t pwr_mgmt0;
     _ROE(_read_register(PWR_MGMT0, (uint8_t*)&pwr_mgmt0, 1));
     *mode = pwr_mgmt0.accel_mode;
@@ -26,6 +28,7 @@ int icm45686_get_accel_mode(struct icm45686_desc *desc, enum ACCEL_MODE *mode)
 
 int icm45686_set_gyro_mode(struct icm45686_desc *desc, const enum GYRO_MODE mode)
 {
+    if (desc == NULL) return 1;
     PWR_MGMT0_t pwr_mgmt0;
     _ROE(_read_register(PWR_MGMT0, (uint8_t*)&pwr_mgmt0, 1));
     pwr_mgmt0.gyro_mode = mode;
@@ -35,6 +38,7 @@ int icm45686_set_gyro_mode(struct icm45686_desc *desc, const enum GYRO_MODE mode
 
 int icm45686_get_gyro_mode(struct icm45686_desc *desc, enum GYRO_MODE *mode)
 {
+    if (desc == NULL || mode == NULL) return 1;
     PWR_MGMT0_t pwr_mgmt0;
     _ROE(_read_register(PWR_MGMT0, (uint8_t*)&pwr_mgmt0, 1));
     *mode = pwr_mgmt0.gyro_mode;
@@ -43,6 +47,7 @@ int icm45686_get_gyro_mode(struct icm45686_desc *desc, enum GYRO_MODE *mode)
 
 int icm45686_set_int1_enable(struct icm45686_desc *desc, struct icm45686_interrupt *cfg)
 {
+    if (desc == NULL || cfg == NULL) return 1;
     INT1_CONFIG0_t int1_config0 = {
         .en_fifo_full = cfg->fifo_full,
         .en_fifo_ths = cfg->fifo_ths,
@@ -70,6 +75,7 @@ int icm45686_set_int1_enable(struct icm45686_desc *desc, struct icm45686_interru
 
 int icm45686_get_int1_enable(struct icm45686_desc *desc, struct icm45686_interrupt *cfg)
 {
+    if (desc == NULL || cfg == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     cfg->fifo_full = int1_config0.en_fifo_full;
@@ -94,6 +100,7 @@ int icm45686_get_int1_enable(struct icm45686_desc *desc, struct icm45686_interru
 
 int icm45686_set_int1_fifo_full_enable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     int1_config0.en_fifo_full = 1;
@@ -103,6 +110,7 @@ int icm45686_set_int1_fifo_full_enable(struct icm45686_desc *desc)
 
 int icm45686_set_int1_fifo_full_disable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     int1_config0.en_fifo_full = 0;
@@ -112,6 +120,7 @@ int icm45686_set_int1_fifo_full_disable(struct icm45686_desc *desc)
 
 int icm45686_get_int1_fifo_full_enable_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     *status = int1_config0.en_fifo_full;
@@ -120,6 +129,7 @@ int icm45686_get_int1_fifo_full_enable_status(struct icm45686_desc *desc, bool *
 
 int icm45686_set_int1_fifo_ths_enable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     int1_config0.en_fifo_ths = 1;
@@ -129,6 +139,7 @@ int icm45686_set_int1_fifo_ths_enable(struct icm45686_desc *desc)
 
 int icm45686_set_int1_fifo_ths_disable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     int1_config0.en_fifo_ths = 0;
@@ -138,6 +149,7 @@ int icm45686_set_int1_fifo_ths_disable(struct icm45686_desc *desc)
 
 int icm45686_get_int1_fifo_ths_enable_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     *status = int1_config0.en_fifo_ths;
@@ -146,6 +158,7 @@ int icm45686_get_int1_fifo_ths_enable_status(struct icm45686_desc *desc, bool *s
 
 int icm45686_set_int1_ap_drdy_enable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     int1_config0.en_drdy = 1;
@@ -155,6 +168,7 @@ int icm45686_set_int1_ap_drdy_enable(struct icm45686_desc *desc)
 
 int icm45686_set_int1_ap_drdy_disable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     int1_config0.en_drdy = 0;
@@ -164,6 +178,7 @@ int icm45686_set_int1_ap_drdy_disable(struct icm45686_desc *desc)
 
 int icm45686_get_int1_ap_drdy_enable_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     *status = int1_config0.en_drdy;
@@ -172,6 +187,7 @@ int icm45686_get_int1_ap_drdy_enable_status(struct icm45686_desc *desc, bool *st
 
 int icm45686_set_int1_aux1_drdy_enable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     int1_config0.en_aux1_drdy = 1;
@@ -181,6 +197,7 @@ int icm45686_set_int1_aux1_drdy_enable(struct icm45686_desc *desc)
 
 int icm45686_set_int1_aux1_drdy_disable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     int1_config0.en_aux1_drdy = 0;
@@ -190,6 +207,7 @@ int icm45686_set_int1_aux1_drdy_disable(struct icm45686_desc *desc)
 
 int icm45686_get_int1_aux1_drdy_enable_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     *status = int1_config0.en_aux1_drdy;
@@ -198,6 +216,7 @@ int icm45686_get_int1_aux1_drdy_enable_status(struct icm45686_desc *desc, bool *
 
 int icm45686_set_int1_ap_fsync_enable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     int1_config0.en_ap_fsync = 1;
@@ -205,8 +224,9 @@ int icm45686_set_int1_ap_fsync_enable(struct icm45686_desc *desc)
     return 0;
 }
 
-int icm45686_set_int1_ap_fsync_enable(struct icm45686_desc *desc)
+int icm45686_set_int1_ap_fsync_disable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     int1_config0.en_ap_fsync = 0;
@@ -216,6 +236,7 @@ int icm45686_set_int1_ap_fsync_enable(struct icm45686_desc *desc)
 
 int icm45686_get_int1_ap_fsync_enable_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     *status = int1_config0.en_ap_fsync;
@@ -224,6 +245,7 @@ int icm45686_get_int1_ap_fsync_enable_status(struct icm45686_desc *desc, bool *s
 
 int icm45686_set_int1_ap_agc_rdy_enable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     int1_config0.en_ap_agc_rdy = 1;
@@ -233,6 +255,7 @@ int icm45686_set_int1_ap_agc_rdy_enable(struct icm45686_desc *desc)
 
 int icm45686_set_int1_ap_agc_rdy_disable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     int1_config0.en_ap_agc_rdy = 0;
@@ -242,6 +265,7 @@ int icm45686_set_int1_ap_agc_rdy_disable(struct icm45686_desc *desc)
 
 int icm45686_get_int1_ap_agc_rdy_enable_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     *status = int1_config0.en_ap_agc_rdy;
@@ -250,6 +274,7 @@ int icm45686_get_int1_ap_agc_rdy_enable_status(struct icm45686_desc *desc, bool 
 
 int icm45686_set_int1_aux1_agc_rdy_enable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     int1_config0.en_aux1_agc_rdy = 1;
@@ -259,6 +284,7 @@ int icm45686_set_int1_aux1_agc_rdy_enable(struct icm45686_desc *desc)
 
 int icm45686_set_int1_aux1_agc_rdy_disable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     int1_config0.en_aux1_agc_rdy = 0;
@@ -268,6 +294,7 @@ int icm45686_set_int1_aux1_agc_rdy_disable(struct icm45686_desc *desc)
 
 int icm45686_get_int1_aux1_agc_rdy_enable_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     *status = int1_config0.en_aux1_agc_rdy;
@@ -276,6 +303,7 @@ int icm45686_get_int1_aux1_agc_rdy_enable_status(struct icm45686_desc *desc, boo
 
 int icm45686_set_int1_reset_done_enable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     int1_config0.en_reset_done = 1;
@@ -285,6 +313,7 @@ int icm45686_set_int1_reset_done_enable(struct icm45686_desc *desc)
 
 int icm45686_set_int1_reset_done_disable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     int1_config0.en_reset_done = 0;
@@ -294,6 +323,7 @@ int icm45686_set_int1_reset_done_disable(struct icm45686_desc *desc)
 
 int icm45686_get_int1_reset_done_enable_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
     _ROE(_read_register(INT1_CONFIG0, (uint8_t*)&int1_config0, 1));
     *status = int1_config0.en_reset_done;
@@ -302,6 +332,7 @@ int icm45686_get_int1_reset_done_enable_status(struct icm45686_desc *desc, bool 
 
 int icm45686_set_int1_pll_rdy_enable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     int1_config1.en_pll_rdy = 1;
@@ -311,6 +342,7 @@ int icm45686_set_int1_pll_rdy_enable(struct icm45686_desc *desc)
 
 int icm45686_set_int1_pll_rdy_disable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     int1_config1.en_pll_rdy = 0;
@@ -320,6 +352,7 @@ int icm45686_set_int1_pll_rdy_disable(struct icm45686_desc *desc)
 
 int icm45686_get_int1_pll_rdy_enable_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     *status = int1_config1.en_pll_rdy;
@@ -328,6 +361,7 @@ int icm45686_get_int1_pll_rdy_enable_status(struct icm45686_desc *desc, bool *st
 
 int icm45686_set_int1_wom_x_enable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     int1_config1.en_wom_x = 1;
@@ -337,6 +371,7 @@ int icm45686_set_int1_wom_x_enable(struct icm45686_desc *desc)
 
 int icm45686_set_int1_wom_x_disable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     int1_config1.en_wom_x = 0;
@@ -346,6 +381,7 @@ int icm45686_set_int1_wom_x_disable(struct icm45686_desc *desc)
 
 int icm45686_get_int1_wom_x_enable_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     *status = int1_config1.en_wom_x;
@@ -354,6 +390,7 @@ int icm45686_get_int1_wom_x_enable_status(struct icm45686_desc *desc, bool *stat
 
 int icm45686_set_int1_wom_y_enable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     int1_config1.en_wom_y = 1;
@@ -363,6 +400,7 @@ int icm45686_set_int1_wom_y_enable(struct icm45686_desc *desc)
 
 int icm45686_set_int1_wom_y_disable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     int1_config1.en_wom_y = 0;
@@ -372,6 +410,7 @@ int icm45686_set_int1_wom_y_disable(struct icm45686_desc *desc)
 
 int icm45686_get_int1_wom_y_enable_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     *status = int1_config1.en_wom_y;
@@ -380,6 +419,7 @@ int icm45686_get_int1_wom_y_enable_status(struct icm45686_desc *desc, bool *stat
 
 int icm45686_set_int1_wom_z_enable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     int1_config1.en_wom_z = 1;
@@ -389,6 +429,7 @@ int icm45686_set_int1_wom_z_enable(struct icm45686_desc *desc)
 
 int icm45686_set_int1_wom_z_disable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     int1_config1.en_wom_z = 0;
@@ -398,6 +439,7 @@ int icm45686_set_int1_wom_z_disable(struct icm45686_desc *desc)
 
 int icm45686_get_int1_wom_z_enable_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     *status = int1_config1.en_wom_z;
@@ -406,6 +448,7 @@ int icm45686_get_int1_wom_z_enable_status(struct icm45686_desc *desc, bool *stat
 
 int icm45686_set_int1_i3c_protocol_err_enable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     int1_config1.en_i3c_protocol_err = 1;
@@ -415,6 +458,7 @@ int icm45686_set_int1_i3c_protocol_err_enable(struct icm45686_desc *desc)
 
 int icm45686_set_int1_i3c_protocol_err_disable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     int1_config1.en_i3c_protocol_err = 0;
@@ -424,6 +468,7 @@ int icm45686_set_int1_i3c_protocol_err_disable(struct icm45686_desc *desc)
 
 int icm45686_get_int1_i3c_protocol_err_enable_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     *status = int1_config1.en_i3c_protocol_err;
@@ -432,6 +477,7 @@ int icm45686_get_int1_i3c_protocol_err_enable_status(struct icm45686_desc *desc,
 
 int icm45686_set_int1_i2cm_done_enable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     int1_config1.en_i2cm_done = 1;
@@ -441,6 +487,7 @@ int icm45686_set_int1_i2cm_done_enable(struct icm45686_desc *desc)
 
 int icm45686_set_int1_i2cm_done_disable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     int1_config1.en_i2cm_done = 0;
@@ -450,6 +497,7 @@ int icm45686_set_int1_i2cm_done_disable(struct icm45686_desc *desc)
 
 int icm45686_get_int1_i2cm_done_enable_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     *status = int1_config1.en_i2cm_done;
@@ -458,6 +506,7 @@ int icm45686_get_int1_i2cm_done_enable_status(struct icm45686_desc *desc, bool *
 
 int icm45686_set_int1_apex_event_enable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     int1_config1.en_apex_event = 1;
@@ -467,6 +516,7 @@ int icm45686_set_int1_apex_event_enable(struct icm45686_desc *desc)
 
 int icm45686_set_int1_apex_event_disable(struct icm45686_desc *desc)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     int1_config1.en_apex_event = 0;
@@ -476,6 +526,7 @@ int icm45686_set_int1_apex_event_disable(struct icm45686_desc *desc)
 
 int icm45686_get_int1_apex_event_enable_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_CONFIG1_t int1_config1;
     _ROE(_read_register(INT1_CONFIG1, (uint8_t*)&int1_config1, 1));
     *status = int1_config1.en_apex_event;
@@ -484,6 +535,7 @@ int icm45686_get_int1_apex_event_enable_status(struct icm45686_desc *desc, bool 
 
 int icm45686_set_int1_polarity(struct icm45686_desc *desc, const enum INT_POLARITY pol)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG2_t int1_config2;
     _ROE(_read_register(INT1_CONFIG2, (uint8_t*)&int1_config2, 1));
     int1_config2.polarity = pol;
@@ -493,6 +545,7 @@ int icm45686_set_int1_polarity(struct icm45686_desc *desc, const enum INT_POLARI
 
 int icm45686_get_int1_polarity(struct icm45686_desc *desc, enum INT_POLARITY *pol)
 {
+    if (desc == NULL || pol == NULL) return 1;
     INT1_CONFIG2_t int1_config2;
     _ROE(_read_register(INT1_CONFIG2, (uint8_t*)&int1_config2, 1));
     *pol = int1_config2.polarity;
@@ -501,6 +554,7 @@ int icm45686_get_int1_polarity(struct icm45686_desc *desc, enum INT_POLARITY *po
 
 int icm45686_set_int1_mode(struct icm45686_desc *desc, const enum INT_MODE mode)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG2_t int1_config2;
     _ROE(_read_register(INT1_CONFIG2, (uint8_t*)&int1_config2, 1));
     int1_config2.mode = mode;
@@ -510,6 +564,7 @@ int icm45686_set_int1_mode(struct icm45686_desc *desc, const enum INT_MODE mode)
 
 int icm45686_get_int1_mode(struct icm45686_desc *desc, enum INT_MODE *mode)
 {
+    if (desc == NULL || mode == NULL) return 1;
     INT1_CONFIG2_t int1_config2;
     _ROE(_read_register(INT1_CONFIG2, (uint8_t*)&int1_config2, 1));
     *mode = int1_config2.mode;
@@ -518,6 +573,7 @@ int icm45686_get_int1_mode(struct icm45686_desc *desc, enum INT_MODE *mode)
 
 int icm45686_set_int1_drive(struct icm45686_desc *desc, const enum INT_DRIVE drive)
 {
+    if (desc == NULL) return 1;
     INT1_CONFIG2_t int1_config2;
     _ROE(_read_register(INT1_CONFIG2, (uint8_t*)&int1_config2, 1));
     int1_config2.drive = drive;
@@ -527,6 +583,7 @@ int icm45686_set_int1_drive(struct icm45686_desc *desc, const enum INT_DRIVE dri
 
 int icm45686_get_int1_drive(struct icm45686_desc *desc, enum INT_DRIVE *drive)
 {
+    if (desc == NULL || drive == NULL) return 1;
     INT1_CONFIG2_t int1_config2;
     _ROE(_read_register(INT1_CONFIG2, (uint8_t*)&int1_config2, 1));
     *drive = int1_config2.drive;
@@ -535,6 +592,7 @@ int icm45686_get_int1_drive(struct icm45686_desc *desc, enum INT_DRIVE *drive)
 
 int icm45686_get_int1_status(struct icm45686_desc *desc, struct icm45686_interrupt *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_STATUS0_t int1_status0;
     _ROE(_read_register(INT1_STATUS0, (uint8_t*)&int1_status0, 1));
     status->fifo_full = int1_status0.fifo_full;
@@ -559,6 +617,7 @@ int icm45686_get_int1_status(struct icm45686_desc *desc, struct icm45686_interru
 
 int icm45686_get_int1_fifo_full_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_STATUS0_t int1_status0;
     _ROE(_read_register(INT1_STATUS0, (uint8_t*)&int1_status0, 1));
     *status = int1_status0.fifo_full;
@@ -567,6 +626,7 @@ int icm45686_get_int1_fifo_full_status(struct icm45686_desc *desc, bool *status)
 
 int icm45686_get_int1_fifo_ths_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_STATUS0_t int1_status0;
     _ROE(_read_register(INT1_STATUS0, (uint8_t*)&int1_status0, 1));
     *status = int1_status0.fifo_ths;
@@ -575,6 +635,7 @@ int icm45686_get_int1_fifo_ths_status(struct icm45686_desc *desc, bool *status)
 
 int icm45686_get_int1_ap_drdy_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_STATUS0_t int1_status0;
     _ROE(_read_register(INT1_STATUS0, (uint8_t*)&int1_status0, 1));
     *status = int1_status0.drdy;
@@ -583,6 +644,7 @@ int icm45686_get_int1_ap_drdy_status(struct icm45686_desc *desc, bool *status)
 
 int icm45686_get_int1_aux1_drdy_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_STATUS0_t int1_status0;
     _ROE(_read_register(INT1_STATUS0, (uint8_t*)&int1_status0, 1));
     *status = int1_status0.aux1_drdy;
@@ -591,6 +653,7 @@ int icm45686_get_int1_aux1_drdy_status(struct icm45686_desc *desc, bool *status)
 
 int icm45686_get_int1_ap_fsync_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_STATUS0_t int1_status0;
     _ROE(_read_register(INT1_STATUS0, (uint8_t*)&int1_status0, 1));
     *status = int1_status0.ap_fsync;
@@ -599,6 +662,7 @@ int icm45686_get_int1_ap_fsync_status(struct icm45686_desc *desc, bool *status)
 
 int icm45686_get_int1_ap_agc_rdy_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_STATUS0_t int1_status0;
     _ROE(_read_register(INT1_STATUS0, (uint8_t*)&int1_status0, 1));
     *status = int1_status0.ap_agc_rdy;
@@ -607,6 +671,7 @@ int icm45686_get_int1_ap_agc_rdy_status(struct icm45686_desc *desc, bool *status
 
 int icm45686_get_int1_aux1_agc_rdy_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_STATUS0_t int1_status0;
     _ROE(_read_register(INT1_STATUS0, (uint8_t*)&int1_status0, 1));
     *status = int1_status0.aux1_agc_rdy;
@@ -615,6 +680,7 @@ int icm45686_get_int1_aux1_agc_rdy_status(struct icm45686_desc *desc, bool *stat
 
 int icm45686_get_int1_reset_done_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_STATUS0_t int1_status0;
     _ROE(_read_register(INT1_STATUS0, (uint8_t*)&int1_status0, 1));
     *status = int1_status0.reset_done;
@@ -623,6 +689,7 @@ int icm45686_get_int1_reset_done_status(struct icm45686_desc *desc, bool *status
 
 int icm45686_get_int1_pll_rdy_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_STATUS1_t int1_status1;
     _ROE(_read_register(INT1_STATUS1, (uint8_t*)&int1_status1, 1));
     *status = int1_status1.pll_rdy;
@@ -631,6 +698,7 @@ int icm45686_get_int1_pll_rdy_status(struct icm45686_desc *desc, bool *status)
 
 int icm45686_get_int1_wom_x_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_STATUS1_t int1_status1;
     _ROE(_read_register(INT1_STATUS1, (uint8_t*)&int1_status1, 1));
     *status = int1_status1.wom_x;
@@ -639,6 +707,7 @@ int icm45686_get_int1_wom_x_status(struct icm45686_desc *desc, bool *status)
 
 int icm45686_get_int1_wom_y_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_STATUS1_t int1_status1;
     _ROE(_read_register(INT1_STATUS1, (uint8_t*)&int1_status1, 1));
     *status = int1_status1.wom_y;
@@ -647,6 +716,7 @@ int icm45686_get_int1_wom_y_status(struct icm45686_desc *desc, bool *status)
 
 int icm45686_get_int1_wom_z_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_STATUS1_t int1_status1;
     _ROE(_read_register(INT1_STATUS1, (uint8_t*)&int1_status1, 1));
     *status = int1_status1.wom_z;
@@ -655,6 +725,7 @@ int icm45686_get_int1_wom_z_status(struct icm45686_desc *desc, bool *status)
 
 int icm45686_get_int1_i3c_protocol_err_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_STATUS1_t int1_status1;
     _ROE(_read_register(INT1_STATUS1, (uint8_t*)&int1_status1, 1));
     *status = int1_status1.i3c_protocol_err;
@@ -663,6 +734,7 @@ int icm45686_get_int1_i3c_protocol_err_status(struct icm45686_desc *desc, bool *
 
 int icm45686_get_int1_i2cm_done_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_STATUS1_t int1_status1;
     _ROE(_read_register(INT1_STATUS1, (uint8_t*)&int1_status1, 1));
     *status = int1_status1.i2cm_done;
@@ -671,6 +743,7 @@ int icm45686_get_int1_i2cm_done_status(struct icm45686_desc *desc, bool *status)
 
 int icm45686_get_int1_apex_event_status(struct icm45686_desc *desc, bool *status)
 {
+    if (desc == NULL || status == NULL) return 1;
     INT1_STATUS1_t int1_status1;
     _ROE(_read_register(INT1_STATUS1, (uint8_t*)&int1_status1, 1));
     *status = int1_status1.apex_event;
@@ -679,6 +752,7 @@ int icm45686_get_int1_apex_event_status(struct icm45686_desc *desc, bool *status
 
 int icm45686_set_ap_accel_scale(struct icm45686_desc *desc, const enum ACCEL_UI_FS_SEL scale)
 {
+    if (desc == NULL) return 1;
     ACCEL_CONFIG0_t accel_config0;
     _ROE(_read_register(ACCEL_CONFIG0, (uint8_t*)&accel_config0, 1));
     accel_config0.scale = scale;
@@ -688,6 +762,7 @@ int icm45686_set_ap_accel_scale(struct icm45686_desc *desc, const enum ACCEL_UI_
 
 int icm45686_get_ap_accel_scale(struct icm45686_desc *desc, enum ACCEL_UI_FS_SEL *scale)
 {
+    if (desc == NULL || scale == NULL) return 1;
     ACCEL_CONFIG0_t accel_config0;
     _ROE(_read_register(ACCEL_CONFIG0, (uint8_t*)&accel_config0, 1));
     *scale = accel_config0.scale;
@@ -696,6 +771,7 @@ int icm45686_get_ap_accel_scale(struct icm45686_desc *desc, enum ACCEL_UI_FS_SEL
 
 int icm45686_set_ap_accel_odr(struct icm45686_desc *desc, const enum ACCEL_ODR odr)
 {
+    if (desc == NULL) return 1;
     ACCEL_CONFIG0_t accel_config0;
     _ROE(_read_register(ACCEL_CONFIG0, (uint8_t*)&accel_config0, 1));
     accel_config0.odr = odr;
@@ -705,6 +781,7 @@ int icm45686_set_ap_accel_odr(struct icm45686_desc *desc, const enum ACCEL_ODR o
 
 int icm45686_get_ap_accel_odr(struct icm45686_desc *desc, enum ACCEL_ODR *odr)
 {
+    if (desc == NULL || odr == NULL) return 1;
     ACCEL_CONFIG0_t accel_config0;
     _ROE(_read_register(ACCEL_CONFIG0, (uint8_t*)&accel_config0, 1));
     *odr = accel_config0.odr;
@@ -713,6 +790,7 @@ int icm45686_get_ap_accel_odr(struct icm45686_desc *desc, enum ACCEL_ODR *odr)
 
 int icm45686_set_ap_gyro_scale(struct icm45686_desc *desc, const enum GYRO_UI_FS_SEL scale)
 {
+    if (desc == NULL) return 1;
     GYRO_CONFIG0_t gyro_config0;
     _ROE(_read_register(GYRO_CONFIG0, (uint8_t*)&gyro_config0, 1));
     gyro_config0.scale = scale;
@@ -722,6 +800,7 @@ int icm45686_set_ap_gyro_scale(struct icm45686_desc *desc, const enum GYRO_UI_FS
 
 int icm45686_get_ap_gyro_scale(struct icm45686_desc *desc, enum GYRO_UI_FS_SEL *scale)
 {
+    if (desc == NULL || scale == NULL) return 1;
     GYRO_CONFIG0_t gyro_config0;
     _ROE(_read_register(GYRO_CONFIG0, (uint8_t*)&gyro_config0, 1));
     *scale = gyro_config0.scale;
@@ -730,6 +809,7 @@ int icm45686_get_ap_gyro_scale(struct icm45686_desc *desc, enum GYRO_UI_FS_SEL *
 
 int icm45686_set_ap_gyro_odr(struct icm45686_desc *desc, const enum GYRO_ODR odr)
 {
+    if (desc == NULL) return 1;
     GYRO_CONFIG0_t gyro_config0;
     _ROE(_read_register(GYRO_CONFIG0, (uint8_t*)&gyro_config0, 1));
     gyro_config0.odr = odr;
@@ -739,6 +819,7 @@ int icm45686_set_ap_gyro_odr(struct icm45686_desc *desc, const enum GYRO_ODR odr
 
 int icm45686_get_ap_gyro_odr(struct icm45686_desc *desc, enum GYRO_ODR *odr)
 {
+    if (desc == NULL || odr == NULL) return 1;
     GYRO_CONFIG0_t gyro_config0;
     _ROE(_read_register(GYRO_CONFIG0, (uint8_t*)&gyro_config0, 1));
     *odr = gyro_config0.odr;
@@ -747,6 +828,7 @@ int icm45686_get_ap_gyro_odr(struct icm45686_desc *desc, enum GYRO_ODR *odr)
 
 int icm45686_set_fifo_depth(struct icm45686_desc *desc, const enum FIFO_DEPTH depth)
 {
+    if (desc == NULL) return 1;
     FIFO_CONFIG0_t fifo_config0;
     _ROE(_read_register(FIFO_CONFIG0, (uint8_t*)&fifo_config0, 1));
     fifo_config0.fifo_depth = depth;
@@ -756,6 +838,7 @@ int icm45686_set_fifo_depth(struct icm45686_desc *desc, const enum FIFO_DEPTH de
 
 int icm45686_get_fifo_depth(struct icm45686_desc *desc, enum FIFO_DEPTH *depth)
 {
+    if (desc == NULL || depth == NULL) return 1;
     FIFO_CONFIG0_t fifo_config0;
     _ROE(_read_register(FIFO_CONFIG0, (uint8_t*)&fifo_config0, 1));
     *depth = fifo_config0.fifo_depth;
@@ -764,6 +847,7 @@ int icm45686_get_fifo_depth(struct icm45686_desc *desc, enum FIFO_DEPTH *depth)
 
 int icm45686_set_fifo_mode(struct icm45686_desc *desc, const enum FIFO_MODE mode)
 {
+    if (desc == NULL) return 1;
     FIFO_CONFIG0_t fifo_config0;
     _ROE(_read_register(FIFO_CONFIG0, (uint8_t*)&fifo_config0, 1));
     fifo_config0.mode = mode;
@@ -773,8 +857,60 @@ int icm45686_set_fifo_mode(struct icm45686_desc *desc, const enum FIFO_MODE mode
 
 int icm45686_get_fifo_mode(struct icm45686_desc *desc, enum FIFO_MODE *mode)
 {
+    if (desc == NULL || mode == NULL) return 1;
     FIFO_CONFIG0_t fifo_config0;
     _ROE(_read_register(FIFO_CONFIG0, (uint8_t*)&fifo_config0, 1));
     *mode = fifo_config0.mode;
+    return 0;
+}
+
+int icm45686_set_fifo_watermark(struct icm45686_desc *desc, uint16_t watermark)
+{
+    if (desc == NULL) return 1;
+    uint8_t wm[2];
+    wm[0] = (uint8_t)watermark;
+    wm[1] = (uint8_t)(watermark>>8);
+    _ROE(_write_register(FIFO_CONFIG1_0, wm, 2));
+    return 0;
+}
+
+int icm45686_get_fifo_watermark(struct icm45686_desc *desc, uint16_t *watermark)
+{
+    if (desc == NULL) return 1;
+    _ROE(_read_register(FIFO_CONFIG1_0, watermark, 2));
+    return 0;
+}
+
+int icm45686_fifo_flush(struct icm45686_desc *desc)
+{
+    if (desc == NULL) return 1;
+    FIFO_CONFIG2_t fifo_config2;
+    _ROE(_read_register(FIFO_CONFIG2, (uint8_t*)&fifo_config2, 1));
+    fifo_config2.fifo_flush = 1;
+    _ROE(_write_register(FIFO_CONFIG2, (uint8_t*)&fifo_config2, 1));
+    fifo_config2.fifo_flush = 0;
+    _ROE(_write_register(FIFO_CONFIG2, (uint8_t*)&fifo_config2, 1));
+    return 0;
+}
+
+int icm45686_set_fifo_watermark_mode(struct icm45686_desc *desc, enum FIFO_WR_WM_GT_TH mode)
+{
+    if (desc == NULL) return 1;
+    FIFO_CONFIG2_t fifo_config2 = {
+        .__dummy1 = 0,
+        .fifo_wm_int_condition = mode,
+        .__dummy2 = 0,
+        .fifo_flush = 0,
+    };
+    _ROE(_write_register(FIFO_CONFIG2, (uint8_t*)&fifo_config2, 1));
+    return 0;
+}
+
+int icm45686_get_fifo_watermark_mode(struct icm45686_desc *desc, enum FIFO_WR_WM_GT_TH *mode)
+{
+    if (desc == NULL) return 1;
+    FIFO_CONFIG2_t fifo_config2;
+    _ROE(_read_register(FIFO_CONFIG2, (uint8_t*)&fifo_config2, 1));
+    *mode = fifo_config2.fifo_wm_int_condition;
     return 0;
 }
