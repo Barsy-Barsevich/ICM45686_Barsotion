@@ -18,9 +18,9 @@ typedef struct icm45686_interrupt
     uint16_t i2cm_done:1;
     uint16_t apex_event:1;
     uint16_t __dummy:1;
-};
+} icm45686_interrupt_t;
 
 typedef struct icm45686_desc
 {
     int dummy;
-};
+} icm45686_desc_t;

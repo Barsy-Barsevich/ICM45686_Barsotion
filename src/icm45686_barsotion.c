@@ -877,7 +877,7 @@ int icm45686_set_fifo_watermark(struct icm45686_desc *desc, uint16_t watermark)
 int icm45686_get_fifo_watermark(struct icm45686_desc *desc, uint16_t *watermark)
 {
     if (desc == NULL) return 1;
-    _ROE(_read_register(FIFO_CONFIG1_0, watermark, 2));
+    _ROE(_read_register(FIFO_CONFIG1_0, (uint8_t*)watermark, 2));
     return 0;
 }
 
@@ -964,7 +964,7 @@ int icm45686_set_fifo_gyro_insertion_disable(struct icm45686_desc *desc)
     return 0;
 }
 
-int icm45686_get_fifo_accel_insertion_enable_status(struct icm45686_desc *desc, bool *status)
+int icm45686_get_fifo_gyro_insertion_enable_status(struct icm45686_desc *desc, bool *status)
 {
     if (desc == NULL || status == NULL) return 1;
     FIFO_CONFIG3_t fifo_config3;

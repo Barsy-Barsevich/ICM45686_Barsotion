@@ -16,7 +16,7 @@ void icm45686_decode_ACCEL_MODE(enum ACCEL_MODE mode, FILE *stream, const char *
             fprintf(stream, "LN (low noise)");
             break;
         default:
-            fprintf("unexpected error (0b%b)", (int)mode);
+            fprintf(stream, "unexpected error (0b%b)", (int)mode);
     }
     fprintf(stream, "\n");
 }
@@ -37,7 +37,7 @@ void icm45686_decode_GYRO_MODE(enum GYRO_MODE mode, FILE *stream, const char *ta
             fprintf(stream, "LN (low noise)");
             break;
         default:
-            fprintf("unexpected error (0b%b)", (int)mode);
+            fprintf(stream, "unexpected error (0b%b)", (int)mode);
     }
     fprintf(stream, "\n");
 }

@@ -6,6 +6,7 @@ extern "C" {
 
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdint.h>
 #include "icm45686_regconst.h"
 #include "icm45686_types.h"
 
@@ -104,7 +105,7 @@ int icm45686_set_fifo_accel_insertion_disable(struct icm45686_desc *desc);
 int icm45686_get_fifo_accel_insertion_enable_status(struct icm45686_desc *desc, bool *status);
 int icm45686_set_fifo_gyro_insertion_enable(struct icm45686_desc *desc);
 int icm45686_set_fifo_gyro_insertion_disable(struct icm45686_desc *desc);
-int icm45686_get_fifo_accel_insertion_enable_status(struct icm45686_desc *desc, bool *status);
+int icm45686_get_fifo_gyro_insertion_enable_status(struct icm45686_desc *desc, bool *status);
 int icm45686_set_fifo_hires_insertion_enable(struct icm45686_desc *desc);
 int icm45686_set_fifo_hires_insertion_disable(struct icm45686_desc *desc);
 int icm45686_get_fifo_hires_insertion_enable_status(struct icm45686_desc *desc, bool *status);
