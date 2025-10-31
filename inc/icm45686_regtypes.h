@@ -121,6 +121,7 @@ typedef struct TMST_WOM_CONFIG
     enum WOM_INT_DUR wom_int_duration:2;
     uint8_t wom_interrupt_en:1;
     enum WOM_MODE wom_mode:1;
+    uint8_t wom_en:1;
     enum TMST_RESOL tmst_resolution:1;
     uint8_t tmst_delta_en:1;
     uint8_t __dummy:1;
