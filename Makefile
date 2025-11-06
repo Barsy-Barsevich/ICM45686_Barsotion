@@ -11,7 +11,7 @@ build-debug:
 	@echo '=====< Creating an archive >===================='
 	${AR} rcs libicm45686-barsotion-debug.a build/*
 	@echo '=====< Totals >================================='
-	@${SIZE} -t --format=gnu libicm45686-barsotion-debug.a
+	@${SIZE} -t --format=berkeley libicm45686-barsotion-debug.a
 
 build:
 	@echo '=====< Building ICM45686 library >=============='
