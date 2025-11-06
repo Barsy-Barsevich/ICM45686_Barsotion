@@ -2007,3 +2007,10 @@ int icm45686_get_int2_apex_event_status(struct icm45686_desc *desc, bool *status
     *status = int2_status1.apex_event;
     return 0;
 }
+
+int icm45686_get_whoami(icm45686_desc_t *desc, uint8_t *whoami)
+{
+    if (desc == NULL || whoami == NULL) return 1;
+    _ROE(_read_register(WHO_AM_I, whoami, 1));
+    return 0;
+}

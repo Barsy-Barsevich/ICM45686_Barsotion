@@ -221,6 +221,8 @@ int icm45686_get_int2_i3c_protocol_err_status(struct icm45686_desc *desc, bool *
 int icm45686_get_int2_i2cm_done_status(struct icm45686_desc *desc, bool *status);
 int icm45686_get_int2_apex_event_status(struct icm45686_desc *desc, bool *status);
 
+int icm45686_get_whoami(icm45686_desc_t *desc, uint8_t *whoami);
+
 
 #if defined(__cplusplus)
 }
