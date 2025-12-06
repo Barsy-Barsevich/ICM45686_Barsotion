@@ -7,6 +7,116 @@
 #define _read_register      icm45686_read_register
 #define _write_register     icm45686_write_register
 
+int icm45686_get_accel(struct icm45686_desc *desc, int16_t *la)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[6];
+    _ROE(_read_register(ACCEL_DATA_X1_UI, raw, 2*3));
+    la[0] = (int16_t)( ((uint16_t)raw[0] << 8) | (uint16_t)raw[1]);
+    la[1] = (int16_t)( ((uint16_t)raw[2] << 8) | (uint16_t)raw[3]);
+    la[2] = (int16_t)( ((uint16_t)raw[4] << 8) | (uint16_t)raw[5]);
+    return 0;
+}
+
+int icm45686_get_accel_x(struct icm45686_desc *desc, int16_t *la)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[2];
+    _ROE(_read_register(ACCEL_DATA_X1_UI, raw, 2));
+    *la = (int16_t)( ((uint16_t)raw[0] << 8) | (uint16_t)raw[1]);
+    return 0;
+}
+
+int icm45686_get_accel_y(struct icm45686_desc *desc, int16_t *la)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[2];
+    _ROE(_read_register(ACCEL_DATA_Y1_UI, raw, 2));
+    *la = (int16_t)( ((uint16_t)raw[0] << 8) | (uint16_t)raw[1]);
+    return 0;
+}
+
+int icm45686_get_accel_z(struct icm45686_desc *desc, int16_t *la)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[2];
+    _ROE(_read_register(ACCEL_DATA_Z1_UI, raw, 2));
+    *la = (int16_t)( ((uint16_t)raw[0] << 8) | (uint16_t)raw[1]);
+    return 0;
+}
+
+int icm45686_get_gyro(struct icm45686_desc *desc, int16_t *av)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[6];
+    _ROE(_read_register(GYRO_DATA_X1_UI, raw, 2*3));
+    av[0] = (int16_t)( ((uint16_t)raw[0] << 8) | (uint16_t)raw[1]);
+    av[1] = (int16_t)( ((uint16_t)raw[2] << 8) | (uint16_t)raw[3]);
+    av[2] = (int16_t)( ((uint16_t)raw[4] << 8) | (uint16_t)raw[5]);
+    return 0;
+}
+
+int icm45686_get_gyro_x(struct icm45686_desc *desc, int16_t *av)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[2];
+    _ROE(_read_register(GYRO_DATA_X1_UI, raw, 2));
+    *av = (int16_t)( ((uint16_t)raw[0] << 8) | (uint16_t)raw[1]);
+    return 0;
+}
+
+int icm45686_get_gyro_y(struct icm45686_desc *desc, int16_t *av)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[2];
+    _ROE(_read_register(GYRO_DATA_Y1_UI, raw, 2));
+    *av = (int16_t)( ((uint16_t)raw[0] << 8) | (uint16_t)raw[1]);
+    return 0;
+}
+
+int icm45686_get_gyro_z(struct icm45686_desc *desc, int16_t *av)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[2];
+    _ROE(_read_register(GYRO_DATA_Z1_UI, raw, 2));
+    *av = (int16_t)( ((uint16_t)raw[0] << 8) | (uint16_t)raw[1]);
+    return 0;
+}
+
+int icm45686_get_temp(struct icm45686_desc *desc, int16_t *temp)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[2];
+    _ROE(_read_register(TEMP_DATA1_UI, raw, 2));
+    *temp = (int16_t)( ((uint16_t)raw[0] << 8) | (uint16_t)raw[1]);
+    return 0;
+}
+
+int icm45686_get_tmst(struct icm45686_desc *desc, int16_t *tmst)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[2];
+    _ROE(_read_register(TMST_FSYNCH, raw, 2));
+    *tmst = (int16_t)( ((uint16_t)raw[0] << 8) | (uint16_t)raw[1]);
+    return 0;
+}
+
+int icm45686_get_fifo_count(struct icm45686_desc *desc, uint16_t *fifo_cnt)
+{
+	if (desc == NULL) return 1;
+	uint8_t raw[2];
+	_ROE(_read_register(FIFO_COUNT_0, raw, 2));
+	*fifo_cnt = (uint16_t)raw[1] << 8 | raw[0];
+	return 0;
+}
+
+int icm45686_get_fifo_data(struct icm45686_desc *desc, uint8_t *dst, int len)
+{
+	if (desc == NULL) return 1;
+	_ROE(_read_register(FIFO_DATA, dst, len));
+	return 0;
+}
+
 int icm45686_set_accel_mode(struct icm45686_desc *desc, const enum ACCEL_MODE mode)
 {
     if (desc == NULL) return 1;
@@ -2013,4 +2123,17 @@ int icm45686_get_whoami(icm45686_desc_t *desc, uint8_t *whoami)
     if (desc == NULL || whoami == NULL) return 1;
     _ROE(_read_register(WHO_AM_I, whoami, 1));
     return 0;
+}
+
+
+int icm45686_init(struct icm45686_desc *desc, const struct icm45686_cfg *cfg)
+{
+	if (desc == NULL || cfg == NULL) return 1;
+	_ROE(icm45686_set_accel_mode(desc, cfg->accel.mode));
+	_ROE(icm45686_set_ap_accel_scale(desc, cfg->accel.scale));
+	_ROE(icm45686_set_ap_accel_odr(desc, cfg->accel.odr));
+	_ROE(icm45686_set_gyro_mode(desc, cfg->gyro.mode));
+	_ROE(icm45686_set_ap_gyro_scale(desc, cfg->gyro.scale));
+	_ROE(icm45686_set_ap_gyro_odr(desc, cfg->gyro.odr));
+	return 0;
 }

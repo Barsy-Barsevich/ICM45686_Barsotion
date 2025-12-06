@@ -24,3 +24,19 @@ typedef struct icm45686_desc
 {
     int dummy;
 } icm45686_desc_t;
+
+typedef struct icm45686_cfg
+{
+    struct
+    {
+        enum ACCEL_MODE mode;
+        enum ACCEL_UI_FS_SEL scale;
+        enum ACCEL_ODR odr;
+    } accel;
+    struct
+    {
+        enum GYRO_MODE mode;
+        enum GYRO_UI_FS_SEL scale;
+        enum GYRO_ODR odr;
+    } gyro;
+} icm45686_cfg;
