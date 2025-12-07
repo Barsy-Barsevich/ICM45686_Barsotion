@@ -12,7 +12,7 @@ typedef struct icm45686_fifo
     int es0_en;
     int es1_en;
     enum FIFO_ES0_6B_9B es0_bytes;
-    int fsync_en;
+    int tmst_en;
     int compression_en;
     enum FIFO_COMP_NC_FLOW_CFG compression_alg;
 } icm45686_fifo_t;
@@ -42,7 +42,7 @@ typedef struct icm45686_interrupt
     enum INT_MODE mode;
     enum INT_POLARITY polarity;
     enum INT_DRIVE drive;
-    struct icm45686_intflag flags;
+    struct icm45686_intflag flags_en;
 } icm45686_interrupt_t;
 
 typedef struct icm45686_desc
@@ -64,10 +64,7 @@ typedef struct icm45686_cfg
         enum GYRO_UI_FS_SEL scale;
         enum GYRO_ODR odr;
     } gyro;
-    struct
-    {
-        
-    } fifo;
+    struct icm45686_fifo fifo;
     struct
     {
         int delta_en;

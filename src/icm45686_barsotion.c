@@ -1370,6 +1370,16 @@ int icm45686_get_wom_int_duration(struct icm45686_desc *desc, enum WOM_INT_DUR *
     return 0;
 }
 
+int icm45686_set_wom_int(struct icm45686_desc *desc, int enable)
+{
+    if (desc == NULL) return 1;
+    TMST_WOM_CONFIG_t tmst_wom_cfg;
+    _ROE(_read_register(TMST_WOM_CONFIG, (uint8_t*)&tmst_wom_cfg, 1));
+    tmst_wom_cfg.wom_interrupt_en = enable&1;
+    _ROE(_write_register(TMST_WOM_CONFIG, (uint8_t*)&tmst_wom_cfg, 1));
+    return 0;
+}
+
 int icm45686_set_wom_int_enable(struct icm45686_desc *desc)
 {
     if (desc == NULL) return 1;
@@ -1418,6 +1428,16 @@ int icm45686_get_wom_mode(struct icm45686_desc *desc, enum WOM_MODE *mode)
     return 0;
 }
 
+int icm45686_set_wom(struct icm45686_desc *desc, int enable)
+{
+    if (desc == NULL) return 1;
+    TMST_WOM_CONFIG_t tmst_wom_cfg;
+    _ROE(_read_register(TMST_WOM_CONFIG, (uint8_t*)&tmst_wom_cfg, 1));
+    tmst_wom_cfg.wom_en = enable&1;
+    _ROE(_write_register(TMST_WOM_CONFIG, (uint8_t*)&tmst_wom_cfg, 1));
+    return 0;
+}
+
 int icm45686_set_wom_enable(struct icm45686_desc *desc)
 {
     if (desc == NULL) return 1;
@@ -1463,6 +1483,16 @@ int icm45686_get_tmst_resol(struct icm45686_desc *desc, enum TMST_RESOL *res)
     TMST_WOM_CONFIG_t tmst_wom_cfg;
     _ROE(_read_register(TMST_WOM_CONFIG, (uint8_t*)&tmst_wom_cfg, 1));
     *res = tmst_wom_cfg.tmst_resolution;
+    return 0;
+}
+
+int icm45686_set_tmst_delta(struct icm45686_desc *desc, int enable)
+{
+    if (desc == NULL) return 1;
+    TMST_WOM_CONFIG_t tmst_wom_cfg;
+    _ROE(_read_register(TMST_WOM_CONFIG, (uint8_t*)&tmst_wom_cfg, 1));
+    tmst_wom_cfg.tmst_delta_en = enable&1;
+    _ROE(_write_register(TMST_WOM_CONFIG, (uint8_t*)&tmst_wom_cfg, 1));
     return 0;
 }
 
@@ -2221,6 +2251,9 @@ int icm45686_init(struct icm45686_desc *desc, const struct icm45686_cfg *cfg)
 	_ROE(icm45686_set_ap_gyro_scale(desc, cfg->gyro.scale));
 	_ROE(icm45686_set_ap_gyro_odr(desc, cfg->gyro.odr));
 
+    _ROE(icm45686_set_tmst_delta(desc, cfg->tmst.delta_en));
+    _ROE(icm45686_set_tmst_resol(desc, cfg->tmst.resolution));
+    _ROE(icm45686_fifo_config(desc, &cfg->fifo));
     _ROE(icm45686_interrupt_config(desc, 1, &cfg->int1));
     _ROE(icm45686_interrupt_config(desc, 2, &cfg->int2));
 	return 0;
@@ -2239,6 +2272,9 @@ int icm45686_fifo_config(struct icm45686_desc *desc, const struct icm45686_fifo 
     _ROE(icm45686_set_fifo_es0_insertion(desc, cfg->es0_en));
     _ROE(icm45686_set_fifo_es1_insertion(desc, cfg->es1_en));
     _ROE(icm45686_set_es0_bytes(desc, cfg->es0_bytes));
+    _ROE(icm45686_set_fifo_tmst_insertion(desc, cfg->tmst_en));
+    _ROE(icm45686_set_fifo_compression_algorithm(desc, cfg->compression_alg));
+    _ROE(icm45686_set_fifo_compression(desc, cfg->compression_en));
     _ROE(icm45686_set_fifo_mode(desc, cfg->mode));
     return 0;
 }
@@ -2251,14 +2287,14 @@ int icm45686_interrupt_config(struct icm45686_desc *desc, int domain, const stru
         _ROE(icm45686_set_int1_mode(desc, cfg->mode));
         _ROE(icm45686_set_int1_polarity(desc, cfg->polarity));
         _ROE(icm45686_set_int1_drive(desc, cfg->drive));
-        _ROE(icm45686_set_int1_enable(desc, &cfg->flags));
+        _ROE(icm45686_set_int1_enable(desc, &cfg->flags_en));
     }
     else if (domain == 2)
     {
         _ROE(icm45686_set_int2_mode(desc, cfg->mode));
         _ROE(icm45686_set_int2_polarity(desc, cfg->polarity));
         _ROE(icm45686_set_int2_drive(desc, cfg->drive));
-        _ROE(icm45686_set_int2_enable(desc, &cfg->flags));
+        _ROE(icm45686_set_int2_enable(desc, &cfg->flags_en));
     }
     else return 1;
     return 0;
