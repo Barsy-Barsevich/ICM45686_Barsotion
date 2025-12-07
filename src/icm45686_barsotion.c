@@ -2241,7 +2241,7 @@ int icm45686_get_whoami(icm45686_desc_t *desc, uint8_t *whoami)
 }
 
 
-int icm45686_init(struct icm45686_desc *desc, const struct icm45686_cfg *cfg)
+int icm45686_init(struct icm45686_desc *desc, struct icm45686_cfg *cfg)
 {
 	if (desc == NULL || cfg == NULL) return 1;
 	_ROE(icm45686_set_accel_mode(desc, cfg->accel.mode));
@@ -2298,4 +2298,194 @@ int icm45686_interrupt_config(struct icm45686_desc *desc, int domain, const stru
     }
     else return 1;
     return 0;
+}
+
+int icm45686_read_fifo_packet0(struct icm45686_desc *desc)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[8];
+    _ROE(icm45686_get_fifo_data(desc, raw, 8));
+    desc->header0 = raw[0];
+    desc->raw_accel.x = (int32_t)( (int16_t)((uint16_t)raw[2]<<8 | raw[1]) );
+    desc->raw_accel.y = (int32_t)( (int16_t)((uint16_t)raw[4]<<8 | raw[3]) );
+    desc->raw_accel.z = (int32_t)( (int16_t)((uint16_t)raw[6]<<8 | raw[5]) );
+    desc->temp0 = raw[7];
+    return 0;
+}
+
+int icm45686_read_fifo_packet1(struct icm45686_desc *desc)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[8];
+    _ROE(icm45686_get_fifo_data(desc, raw, 8));
+    desc->header0 = raw[0];
+    desc->raw_gyro.x = (int32_t)( (int16_t)((uint16_t)raw[2]<<8 | raw[1]) );
+    desc->raw_gyro.y = (int32_t)( (int16_t)((uint16_t)raw[4]<<8 | raw[3]) );
+    desc->raw_gyro.z = (int32_t)( (int16_t)((uint16_t)raw[6]<<8 | raw[5]) );
+    desc->temp0 = raw[7];
+    return 0;
+}
+
+int icm45686_read_fifo_packet2(struct icm45686_desc *desc)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[16];
+    _ROE(icm45686_get_fifo_data(desc, raw, 16));
+    desc->header0 = raw[0];
+    desc->raw_accel.x = (int32_t)( (int16_t)((uint16_t)raw[2]<<8 | raw[1]) );
+    desc->raw_accel.y = (int32_t)( (int16_t)((uint16_t)raw[4]<<8 | raw[3]) );
+    desc->raw_accel.z = (int32_t)( (int16_t)((uint16_t)raw[6]<<8 | raw[5]) );
+    desc->raw_gyro.x = (int32_t)( (int16_t)((uint16_t)raw[8]<<8 | raw[7]) );
+    desc->raw_gyro.y = (int32_t)( (int16_t)((uint16_t)raw[10]<<8 | raw[9]) );
+    desc->raw_gyro.z = (int32_t)( (int16_t)((uint16_t)raw[12]<<8 | raw[11]) );
+    desc->temp0 = raw[13];
+    desc->timestamp = (uint16_t)raw[14]<<8 | raw[15];
+    return 0;
+}
+
+int icm45686_read_fifo_packet3(struct icm45686_desc *desc)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[20];
+    _ROE(icm45686_get_fifo_data(desc, raw, 20));
+    desc->header0 = raw[0];
+    desc->raw_accel.x = (int32_t)( (int16_t)((uint16_t)raw[2]<<12 | (uint16_t)raw[1]<<4 | (raw[17]>>4)) );
+    desc->raw_accel.y = (int32_t)( (int16_t)((uint16_t)raw[4]<<12 | (uint16_t)raw[3]<<4 | (raw[18]>>4)) );
+    desc->raw_accel.z = (int32_t)( (int16_t)((uint16_t)raw[6]<<12 | (uint16_t)raw[5]<<4 | (raw[19]>>4)) );
+    desc->raw_gyro.x = (int32_t)( (int16_t)((uint16_t)raw[8]<<12 | (uint16_t)raw[7]<<4 | (raw[17]&0xF)) );
+    desc->raw_gyro.y = (int32_t)( (int16_t)((uint16_t)raw[10]<<12 | (uint16_t)raw[9]<<4 | (raw[18]&0xF)) );
+    desc->raw_gyro.z = (int32_t)( (int16_t)((uint16_t)raw[12]<<12 | (uint16_t)raw[11]<<4 | (raw[19]&0xF)) );
+    desc->temp0 = raw[13];
+    desc->temp1 = raw[14];
+    desc->timestamp = (uint16_t)raw[16]<<8 | raw[15];
+    return 0;
+}
+
+int icm45686_read_fifo_packet4(struct icm45686_desc *desc)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[16];
+    _ROE(icm45686_get_fifo_data(desc, raw, 16));
+    desc->header0 = raw[0];
+    desc->header1 = raw[1];
+    for (int i=0; i<6; i++) desc->es0_data[i] = raw[i+2];
+    return 0;
+}
+
+int icm45686_read_fifo_packet5(struct icm45686_desc *desc)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[16];
+    _ROE(icm45686_get_fifo_data(desc, raw, 16));
+    desc->header0 = raw[0];
+    desc->header1 = raw[1];
+    for (int i=0; i<9; i++) desc->es0_data[i] = raw[i+2];
+    return 0;
+}
+
+int icm45686_read_fifo_packet6(struct icm45686_desc *desc)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[16];
+    _ROE(icm45686_get_fifo_data(desc, raw, 16));
+    desc->header0 = raw[0];
+    desc->header1 = raw[1];
+    for (int i=0; i<6; i++) desc->es1_data[i] = raw[i+2];
+    return 0;
+}
+
+int icm45686_read_fifo_packet7(struct icm45686_desc *desc)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[20];
+    _ROE(icm45686_get_fifo_data(desc, raw, 20));
+    desc->header0 = raw[0];
+    desc->header1 = raw[1];
+    for (int i=0; i<6; i++) desc->es0_data[i] = raw[i+2];
+    for (int i=0; i<6; i++) desc->es1_data[i] = raw[i+11];
+    return 0;
+}
+
+int icm45686_read_fifo_packet8(struct icm45686_desc *desc)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[20];
+    _ROE(icm45686_get_fifo_data(desc, raw, 20));
+    desc->header0 = raw[0];
+    desc->header1 = raw[1];
+    for (int i=0; i<9; i++) desc->es0_data[i] = raw[i+2];
+    for (int i=0; i<6; i++) desc->es1_data[i] = raw[i+11];
+    return 0;
+}
+
+int icm45686_read_fifo_packet9(struct icm45686_desc *desc)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[32];
+    _ROE(icm45686_get_fifo_data(desc, raw, 32));
+    desc->header0 = raw[0];
+    desc->header1 = raw[1];
+    desc->raw_accel.x = (int32_t)( (int16_t)((uint16_t)raw[3]<<8 | raw[2]) );
+    desc->raw_accel.y = (int32_t)( (int16_t)((uint16_t)raw[5]<<8 | raw[4]) );
+    desc->raw_accel.z = (int32_t)( (int16_t)((uint16_t)raw[7]<<8 | raw[6]) );
+    desc->raw_gyro.x = (int32_t)( (int16_t)((uint16_t)raw[9]<<8 | raw[8]) );
+    desc->raw_gyro.y = (int32_t)( (int16_t)((uint16_t)raw[11]<<8 | raw[10]) );
+    desc->raw_gyro.z = (int32_t)( (int16_t)((uint16_t)raw[13]<<8 | raw[12]) );
+    for (int i=0; i<6; i++) desc->es0_data[i] = raw[i+14];
+    for (int i=0; i<6; i++) desc->es1_data[i] = raw[i+23];
+    desc->temp0 = raw[29];
+    desc->timestamp = (uint16_t)raw[31]<<8 | raw[30];
+    return 0;
+}
+
+int icm45686_read_fifo_packet10(struct icm45686_desc *desc)
+{
+    if (desc == NULL) return 1;
+    uint8_t raw[32];
+    _ROE(icm45686_get_fifo_data(desc, raw, 32));
+    desc->header0 = raw[0];
+    desc->header1 = raw[1];
+    desc->raw_accel.x = (int32_t)( (int16_t)((uint16_t)raw[3]<<8 | raw[2]) );
+    desc->raw_accel.y = (int32_t)( (int16_t)((uint16_t)raw[5]<<8 | raw[4]) );
+    desc->raw_accel.z = (int32_t)( (int16_t)((uint16_t)raw[7]<<8 | raw[6]) );
+    desc->raw_gyro.x = (int32_t)( (int16_t)((uint16_t)raw[9]<<8 | raw[8]) );
+    desc->raw_gyro.y = (int32_t)( (int16_t)((uint16_t)raw[11]<<8 | raw[10]) );
+    desc->raw_gyro.z = (int32_t)( (int16_t)((uint16_t)raw[13]<<8 | raw[12]) );
+    for (int i=0; i<9; i++) desc->es0_data[i] = raw[i+14];
+    for (int i=0; i<6; i++) desc->es1_data[i] = raw[i+23];
+    desc->temp0 = raw[29];
+    desc->timestamp = (uint16_t)raw[31]<<8 | raw[30];
+    return 0;
+}
+
+int icm45686_read_fifo_packet(struct icm45686_desc *desc)
+{
+    if (desc == NULL) return 1;
+    switch (desc->fifo_packet_type)
+    {
+    case 0:
+        return icm45686_read_fifo_packet0(desc);
+    case 1:
+        return icm45686_read_fifo_packet1(desc);
+    case 2:
+        return icm45686_read_fifo_packet2(desc);
+    case 3:
+        return icm45686_read_fifo_packet3(desc);
+    case 4:
+        return icm45686_read_fifo_packet4(desc);
+    case 5:
+        return icm45686_read_fifo_packet5(desc);
+    case 6:
+        return icm45686_read_fifo_packet6(desc);
+    case 7:
+        return icm45686_read_fifo_packet7(desc);
+    case 8:
+        return icm45686_read_fifo_packet8(desc);
+    case 9:
+        return icm45686_read_fifo_packet9(desc);
+    case 10:
+        return icm45686_read_fifo_packet10(desc);
+    default:
+        return 2;
+    }
 }

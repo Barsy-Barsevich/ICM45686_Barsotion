@@ -45,9 +45,28 @@ typedef struct icm45686_interrupt
     struct icm45686_intflag flags_en;
 } icm45686_interrupt_t;
 
+typedef struct icm45686_xyz_int32
+{
+    int32_t x, y, z;
+} icm45686_xyz_int32_t;
+
+typedef struct icm45686_xyz_float
+{
+    float x, y, z;
+} icm45686_xyz_float_t;
+
 typedef struct icm45686_desc
 {
-    int dummy;
+    int fifo_packet_type;
+    struct icm45686_xyz_int32 raw_accel;
+    struct icm45686_xyz_int32 raw_gyro;
+    uint8_t header0;
+    uint8_t header1;
+    uint8_t temp0;
+    uint8_t temp1;
+    uint16_t timestamp;
+    uint8_t es0_data[9];
+    uint8_t es1_data[6];
 } icm45686_desc_t;
 
 typedef struct icm45686_cfg

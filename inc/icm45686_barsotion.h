@@ -244,7 +244,21 @@ int icm45686_get_int2_i2cm_done_status(struct icm45686_desc *desc, bool *status)
 int icm45686_get_int2_apex_event_status(struct icm45686_desc *desc, bool *status);
 
 int icm45686_get_whoami(icm45686_desc_t *desc, uint8_t *whoami);
-int icm45686_init(struct icm45686_desc *desc, const struct icm45686_cfg *cfg);
+int icm45686_init(struct icm45686_desc *desc, struct icm45686_cfg *cfg);
+int icm45686_fifo_config(struct icm45686_desc *desc, const struct icm45686_fifo *cfg);
+int icm45686_interrupt_config(struct icm45686_desc *desc, int domain, const struct icm45686_interrupt *cfg);
+int icm45686_read_fifo_packet0(struct icm45686_desc *desc);
+int icm45686_read_fifo_packet1(struct icm45686_desc *desc);
+int icm45686_read_fifo_packet2(struct icm45686_desc *desc);
+int icm45686_read_fifo_packet3(struct icm45686_desc *desc);
+int icm45686_read_fifo_packet4(struct icm45686_desc *desc);
+int icm45686_read_fifo_packet5(struct icm45686_desc *desc);
+int icm45686_read_fifo_packet6(struct icm45686_desc *desc);
+int icm45686_read_fifo_packet7(struct icm45686_desc *desc);
+int icm45686_read_fifo_packet8(struct icm45686_desc *desc);
+int icm45686_read_fifo_packet9(struct icm45686_desc *desc);
+int icm45686_read_fifo_packet10(struct icm45686_desc *desc);
+int icm45686_read_fifo_packet(struct icm45686_desc *desc);
 
 #if defined(__cplusplus)
 }
