@@ -155,7 +155,7 @@ int icm45686_get_gyro_mode(struct icm45686_desc *desc, enum GYRO_MODE *mode)
     return 0;
 }
 
-int icm45686_set_int1_enable(struct icm45686_desc *desc, struct icm45686_interrupt *cfg)
+int icm45686_set_int1_enable(struct icm45686_desc *desc, struct icm45686_intflag *cfg)
 {
     if (desc == NULL || cfg == NULL) return 1;
     INT1_CONFIG0_t int1_config0 = {
@@ -183,7 +183,7 @@ int icm45686_set_int1_enable(struct icm45686_desc *desc, struct icm45686_interru
     return 0;
 }
 
-int icm45686_get_int1_enable(struct icm45686_desc *desc, struct icm45686_interrupt *cfg)
+int icm45686_get_int1_enable(struct icm45686_desc *desc, struct icm45686_intflag *cfg)
 {
     if (desc == NULL || cfg == NULL) return 1;
     INT1_CONFIG0_t int1_config0;
@@ -700,7 +700,7 @@ int icm45686_get_int1_drive(struct icm45686_desc *desc, enum INT_DRIVE *drive)
     return 0;
 }
 
-int icm45686_get_int1_status(struct icm45686_desc *desc, struct icm45686_interrupt *status)
+int icm45686_get_int1_status(struct icm45686_desc *desc, struct icm45686_intflag *status)
 {
     if (desc == NULL || status == NULL) return 1;
     INT1_STATUS0_t int1_status0;
@@ -958,10 +958,25 @@ int icm45686_get_fifo_depth(struct icm45686_desc *desc, enum FIFO_DEPTH *depth)
 int icm45686_set_fifo_mode(struct icm45686_desc *desc, const enum FIFO_MODE mode)
 {
     if (desc == NULL) return 1;
+    if (mode == _FIFO_MODE_RESERVED) return 2;
     FIFO_CONFIG0_t fifo_config0;
     _ROE(_read_register(FIFO_CONFIG0, (uint8_t*)&fifo_config0, 1));
     fifo_config0.mode = mode;
     _ROE(_write_register(FIFO_CONFIG0, (uint8_t*)&fifo_config0, 1));
+    if (mode == FIFO_MODE_BYPASS)
+    {
+        FIFO_CONFIG3_t fifo_config3;
+        _ROE(_read_register(FIFO_CONFIG3, (uint8_t*)&fifo_config3, 1));
+        fifo_config3.fifo_data_insertion_en = 0;
+        _ROE(_write_register(FIFO_CONFIG3, (uint8_t*)&fifo_config3, 1));
+    }
+    else
+    {
+        FIFO_CONFIG3_t fifo_config3;
+        _ROE(_read_register(FIFO_CONFIG3, (uint8_t*)&fifo_config3, 1));
+        fifo_config3.fifo_data_insertion_en = 1;
+        _ROE(_write_register(FIFO_CONFIG3, (uint8_t*)&fifo_config3, 1));
+    }
     return 0;
 }
 
@@ -1025,6 +1040,16 @@ int icm45686_get_fifo_watermark_mode(struct icm45686_desc *desc, enum FIFO_WR_WM
     return 0;
 }
 
+int icm45686_set_fifo_accel_insertion(struct icm45686_desc *desc, int enable)
+{
+    if (desc == NULL) return 1;
+    FIFO_CONFIG3_t fifo_config3;
+    _ROE(_read_register(FIFO_CONFIG3, (uint8_t*)&fifo_config3, 1));
+    fifo_config3.fifo_accel_insertion_en = enable&1;
+    _ROE(_write_register(FIFO_CONFIG3, (uint8_t*)&fifo_config3, 1));
+    return 0;
+}
+
 int icm45686_set_fifo_accel_insertion_enable(struct icm45686_desc *desc)
 {
     if (desc == NULL) return 1;
@@ -1051,6 +1076,16 @@ int icm45686_get_fifo_accel_insertion_enable_status(struct icm45686_desc *desc, 
     FIFO_CONFIG3_t fifo_config3;
     _ROE(_read_register(FIFO_CONFIG3, (uint8_t*)&fifo_config3, 1));
     *status = fifo_config3.fifo_accel_insertion_en;
+    return 0;
+}
+
+int icm45686_set_fifo_gyro_insertion(struct icm45686_desc *desc, int enable)
+{
+    if (desc == NULL) return 1;
+    FIFO_CONFIG3_t fifo_config3;
+    _ROE(_read_register(FIFO_CONFIG3, (uint8_t*)&fifo_config3, 1));
+    fifo_config3.fifo_gyro_insertion_en = enable&1;
+    _ROE(_write_register(FIFO_CONFIG3, (uint8_t*)&fifo_config3, 1));
     return 0;
 }
 
@@ -1083,6 +1118,16 @@ int icm45686_get_fifo_gyro_insertion_enable_status(struct icm45686_desc *desc, b
     return 0;
 }
 
+int icm45686_set_fifo_hires_insertion(struct icm45686_desc *desc, int enable)
+{
+    if (desc == NULL) return 1;
+    FIFO_CONFIG3_t fifo_config3;
+    _ROE(_read_register(FIFO_CONFIG3, (uint8_t*)&fifo_config3, 1));
+    fifo_config3.fifo_sensor_high_resolution_en = enable&1;
+    _ROE(_write_register(FIFO_CONFIG3, (uint8_t*)&fifo_config3, 1));
+    return 0;
+}
+
 int icm45686_set_fifo_hires_insertion_enable(struct icm45686_desc *desc)
 {
     if (desc == NULL) return 1;
@@ -1109,6 +1154,16 @@ int icm45686_get_fifo_hires_insertion_enable_status(struct icm45686_desc *desc, 
     FIFO_CONFIG3_t fifo_config3;
     _ROE(_read_register(FIFO_CONFIG3, (uint8_t*)&fifo_config3, 1));
     *status = fifo_config3.fifo_sensor_high_resolution_en;
+    return 0;
+}
+
+int icm45686_set_fifo_es0_insertion(struct icm45686_desc *desc, int enable)
+{
+    if (desc == NULL) return 1;
+    FIFO_CONFIG3_t fifo_config3;
+    _ROE(_read_register(FIFO_CONFIG3, (uint8_t*)&fifo_config3, 1));
+    fifo_config3.fifo_es0_insertion_en = enable&1;
+    _ROE(_write_register(FIFO_CONFIG3, (uint8_t*)&fifo_config3, 1));
     return 0;
 }
 
@@ -1141,6 +1196,16 @@ int icm45686_get_fifo_es0_insertion_enable_status(struct icm45686_desc *desc, bo
     return 0;
 }
 
+int icm45686_set_fifo_es1_insertion(struct icm45686_desc *desc, int enable)
+{
+    if (desc == NULL) return 1;
+    FIFO_CONFIG3_t fifo_config3;
+    _ROE(_read_register(FIFO_CONFIG3, (uint8_t*)&fifo_config3, 1));
+    fifo_config3.fifo_es1_insertion_en = enable&1;
+    _ROE(_write_register(FIFO_CONFIG3, (uint8_t*)&fifo_config3, 1));
+    return 0;
+}
+
 int icm45686_set_fifo_es1_insertion_enable(struct icm45686_desc *desc)
 {
     if (desc == NULL) return 1;
@@ -1167,6 +1232,16 @@ int icm45686_get_fifo_es1_insertion_enable_status(struct icm45686_desc *desc, bo
     FIFO_CONFIG3_t fifo_config3;
     _ROE(_read_register(FIFO_CONFIG3, (uint8_t*)&fifo_config3, 1));
     *status = fifo_config3.fifo_es1_insertion_en;
+    return 0;
+}
+
+int icm45686_set_fifo_tmst_insertion(struct icm45686_desc *desc, int enable)
+{
+    if (desc == NULL) return 1;
+    FIFO_CONFIG4_t fifo_config4;
+    _ROE(_read_register(FIFO_CONFIG4, (uint8_t*)&fifo_config4, 1));
+    fifo_config4.fifo_tmst_fsync_insertion_en = enable&1;
+    _ROE(_write_register(FIFO_CONFIG3, (uint8_t*)&fifo_config4, 1));
     return 0;
 }
 
@@ -1215,6 +1290,16 @@ int icm45686_get_es0_bytes(struct icm45686_desc *desc, enum FIFO_ES0_6B_9B *byte
     FIFO_CONFIG4_t fifo_config4;
     _ROE(_read_register(FIFO_CONFIG4, (uint8_t*)&fifo_config4, 1));
     *bytes = fifo_config4.ext_sensor0_bytes;
+    return 0;
+}
+
+int icm45686_set_fifo_compression(struct icm45686_desc *desc, int enable)
+{
+    if (desc == NULL) return 1;
+    FIFO_CONFIG4_t fifo_config4;
+    _ROE(_read_register(FIFO_CONFIG4, (uint8_t*)&fifo_config4, 1));
+    fifo_config4.fifo_compression_en = enable&1;
+    _ROE(_write_register(FIFO_CONFIG4, (uint8_t*)&fifo_config4, 1));
     return 0;
 }
 
@@ -1413,7 +1498,7 @@ int icm45686_get_tmst_delta_enable_status(struct icm45686_desc *desc, bool *stat
 
 
 
-int icm45686_set_int2_enable(struct icm45686_desc *desc, struct icm45686_interrupt *cfg)
+int icm45686_set_int2_enable(struct icm45686_desc *desc, struct icm45686_intflag *cfg)
 {
     if (desc == NULL || cfg == NULL) return 1;
     INT2_CONFIG0_t int2_config0 = {
@@ -1441,7 +1526,7 @@ int icm45686_set_int2_enable(struct icm45686_desc *desc, struct icm45686_interru
     return 0;
 }
 
-int icm45686_get_int2_enable(struct icm45686_desc *desc, struct icm45686_interrupt *cfg)
+int icm45686_get_int2_enable(struct icm45686_desc *desc, struct icm45686_intflag *cfg)
 {
     if (desc == NULL || cfg == NULL) return 1;
     INT2_CONFIG0_t int2_config0;
@@ -1958,7 +2043,7 @@ int icm45686_get_int2_drive(struct icm45686_desc *desc, enum INT_DRIVE *drive)
     return 0;
 }
 
-int icm45686_get_int2_status(struct icm45686_desc *desc, struct icm45686_interrupt *status)
+int icm45686_get_int2_status(struct icm45686_desc *desc, struct icm45686_intflag *status)
 {
     if (desc == NULL || status == NULL) return 1;
     INT2_STATUS0_t int2_status0;
@@ -2135,5 +2220,46 @@ int icm45686_init(struct icm45686_desc *desc, const struct icm45686_cfg *cfg)
 	_ROE(icm45686_set_gyro_mode(desc, cfg->gyro.mode));
 	_ROE(icm45686_set_ap_gyro_scale(desc, cfg->gyro.scale));
 	_ROE(icm45686_set_ap_gyro_odr(desc, cfg->gyro.odr));
+
+    _ROE(icm45686_interrupt_config(desc, 1, &cfg->int1));
+    _ROE(icm45686_interrupt_config(desc, 2, &cfg->int2));
 	return 0;
+}
+
+int icm45686_fifo_config(struct icm45686_desc *desc, const struct icm45686_fifo *cfg)
+{
+    if (desc == NULL || cfg == NULL) return 1;
+    _ROE(icm45686_set_fifo_depth(desc, cfg->depth));
+    _ROE(icm45686_set_fifo_mode(desc, FIFO_MODE_BYPASS));
+    _ROE(icm45686_set_fifo_watermark_mode(desc, cfg->wm_int_cond));
+    _ROE(icm45686_set_fifo_watermark(desc, cfg->watermark));
+    _ROE(icm45686_set_fifo_accel_insertion(desc, cfg->accel_en));
+    _ROE(icm45686_set_fifo_gyro_insertion(desc, cfg->gyro_en));
+    _ROE(icm45686_set_fifo_hires_insertion(desc, cfg->hires_en));
+    _ROE(icm45686_set_fifo_es0_insertion(desc, cfg->es0_en));
+    _ROE(icm45686_set_fifo_es1_insertion(desc, cfg->es1_en));
+    _ROE(icm45686_set_es0_bytes(desc, cfg->es0_bytes));
+    _ROE(icm45686_set_fifo_mode(desc, cfg->mode));
+    return 0;
+}
+
+int icm45686_interrupt_config(struct icm45686_desc *desc, int domain, const struct icm45686_interrupt *cfg)
+{
+    if (desc == NULL || cfg == NULL) return 1;
+    if (domain == 1)
+    {
+        _ROE(icm45686_set_int1_mode(desc, cfg->mode));
+        _ROE(icm45686_set_int1_polarity(desc, cfg->polarity));
+        _ROE(icm45686_set_int1_drive(desc, cfg->drive));
+        _ROE(icm45686_set_int1_enable(desc, &cfg->flags));
+    }
+    else if (domain == 2)
+    {
+        _ROE(icm45686_set_int2_mode(desc, cfg->mode));
+        _ROE(icm45686_set_int2_polarity(desc, cfg->polarity));
+        _ROE(icm45686_set_int2_drive(desc, cfg->drive));
+        _ROE(icm45686_set_int2_enable(desc, &cfg->flags));
+    }
+    else return 1;
+    return 0;
 }
