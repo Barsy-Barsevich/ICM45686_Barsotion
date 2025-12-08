@@ -6,8 +6,8 @@ SIZE = ${PREFIX}-size
 build-debug:
 	@echo '=====< Building ICM45686 library >=============='
 	@mkdir build || echo "INFO: 'build' directory has already created."
-	${CC} ${FLAGS} -I./inc -c src/icm45686_barsotion.c -o build/icm45686_barsotion.o
-	${CC} ${FLAGS} -I./inc -c src/icm45686_fielddecode.c -o build/icm45686_fielddecode.o
+	${CC} ${FLAGS} -ffunction-sections -I./inc -c src/icm45686_barsotion.c -o build/icm45686_barsotion.o
+	${CC} ${FLAGS} -ffunction-sections -I./inc -c src/icm45686_fielddecode.c -o build/icm45686_fielddecode.o
 	@echo '=====< Creating an archive >===================='
 	${AR} rcs libicm45686-barsotion-debug.a build/*
 	@echo '=====< Totals >================================='
