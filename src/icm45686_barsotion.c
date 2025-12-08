@@ -7,7 +7,7 @@
 #define _read_register      icm45686_read_register
 #define _write_register     icm45686_write_register
 
-int icm45686_get_accel(struct icm45686_desc *desc, int16_t *la)
+int icm45686_read_accel(struct icm45686_desc *desc, int16_t *la)
 {
     if (desc == NULL) return 1;
     uint8_t raw[6];
@@ -18,7 +18,7 @@ int icm45686_get_accel(struct icm45686_desc *desc, int16_t *la)
     return 0;
 }
 
-int icm45686_get_accel_x(struct icm45686_desc *desc, int16_t *la)
+int icm45686_read_accel_x(struct icm45686_desc *desc, int16_t *la)
 {
     if (desc == NULL) return 1;
     uint8_t raw[2];
@@ -27,7 +27,7 @@ int icm45686_get_accel_x(struct icm45686_desc *desc, int16_t *la)
     return 0;
 }
 
-int icm45686_get_accel_y(struct icm45686_desc *desc, int16_t *la)
+int icm45686_read_accel_y(struct icm45686_desc *desc, int16_t *la)
 {
     if (desc == NULL) return 1;
     uint8_t raw[2];
@@ -36,7 +36,7 @@ int icm45686_get_accel_y(struct icm45686_desc *desc, int16_t *la)
     return 0;
 }
 
-int icm45686_get_accel_z(struct icm45686_desc *desc, int16_t *la)
+int icm45686_read_accel_z(struct icm45686_desc *desc, int16_t *la)
 {
     if (desc == NULL) return 1;
     uint8_t raw[2];
@@ -45,7 +45,7 @@ int icm45686_get_accel_z(struct icm45686_desc *desc, int16_t *la)
     return 0;
 }
 
-int icm45686_get_gyro(struct icm45686_desc *desc, int16_t *av)
+int icm45686_read_gyro(struct icm45686_desc *desc, int16_t *av)
 {
     if (desc == NULL) return 1;
     uint8_t raw[6];
@@ -56,7 +56,7 @@ int icm45686_get_gyro(struct icm45686_desc *desc, int16_t *av)
     return 0;
 }
 
-int icm45686_get_gyro_x(struct icm45686_desc *desc, int16_t *av)
+int icm45686_read_gyro_x(struct icm45686_desc *desc, int16_t *av)
 {
     if (desc == NULL) return 1;
     uint8_t raw[2];
@@ -65,7 +65,7 @@ int icm45686_get_gyro_x(struct icm45686_desc *desc, int16_t *av)
     return 0;
 }
 
-int icm45686_get_gyro_y(struct icm45686_desc *desc, int16_t *av)
+int icm45686_read_gyro_y(struct icm45686_desc *desc, int16_t *av)
 {
     if (desc == NULL) return 1;
     uint8_t raw[2];
@@ -74,7 +74,7 @@ int icm45686_get_gyro_y(struct icm45686_desc *desc, int16_t *av)
     return 0;
 }
 
-int icm45686_get_gyro_z(struct icm45686_desc *desc, int16_t *av)
+int icm45686_read_gyro_z(struct icm45686_desc *desc, int16_t *av)
 {
     if (desc == NULL) return 1;
     uint8_t raw[2];
@@ -83,7 +83,7 @@ int icm45686_get_gyro_z(struct icm45686_desc *desc, int16_t *av)
     return 0;
 }
 
-int icm45686_get_temp(struct icm45686_desc *desc, int16_t *temp)
+int icm45686_read_temp(struct icm45686_desc *desc, int16_t *temp)
 {
     if (desc == NULL) return 1;
     uint8_t raw[2];
@@ -92,7 +92,7 @@ int icm45686_get_temp(struct icm45686_desc *desc, int16_t *temp)
     return 0;
 }
 
-int icm45686_get_tmst(struct icm45686_desc *desc, int16_t *tmst)
+int icm45686_read_tmst(struct icm45686_desc *desc, int16_t *tmst)
 {
     if (desc == NULL) return 1;
     uint8_t raw[2];
@@ -101,7 +101,7 @@ int icm45686_get_tmst(struct icm45686_desc *desc, int16_t *tmst)
     return 0;
 }
 
-int icm45686_get_fifo_count(struct icm45686_desc *desc, uint16_t *fifo_cnt)
+int icm45686_read_fifo_count(struct icm45686_desc *desc, uint16_t *fifo_cnt)
 {
 	if (desc == NULL) return 1;
 	uint8_t raw[2];
@@ -110,7 +110,7 @@ int icm45686_get_fifo_count(struct icm45686_desc *desc, uint16_t *fifo_cnt)
 	return 0;
 }
 
-int icm45686_get_fifo_data(struct icm45686_desc *desc, uint8_t *dst, int len)
+int icm45686_read_fifo_data(struct icm45686_desc *desc, uint8_t *dst, int len)
 {
 	if (desc == NULL) return 1;
 	_ROE(_read_register(FIFO_DATA, dst, len));
@@ -2304,7 +2304,7 @@ int icm45686_read_fifo_packet0(struct icm45686_desc *desc)
 {
     if (desc == NULL) return 1;
     uint8_t raw[8];
-    _ROE(icm45686_get_fifo_data(desc, raw, 8));
+    _ROE(icm45686_read_fifo_data(desc, raw, 8));
     desc->header0 = raw[0];
     desc->raw_accel.x = (int32_t)( (int16_t)((uint16_t)raw[2]<<8 | raw[1]) );
     desc->raw_accel.y = (int32_t)( (int16_t)((uint16_t)raw[4]<<8 | raw[3]) );
@@ -2317,7 +2317,7 @@ int icm45686_read_fifo_packet1(struct icm45686_desc *desc)
 {
     if (desc == NULL) return 1;
     uint8_t raw[8];
-    _ROE(icm45686_get_fifo_data(desc, raw, 8));
+    _ROE(icm45686_read_fifo_data(desc, raw, 8));
     desc->header0 = raw[0];
     desc->raw_gyro.x = (int32_t)( (int16_t)((uint16_t)raw[2]<<8 | raw[1]) );
     desc->raw_gyro.y = (int32_t)( (int16_t)((uint16_t)raw[4]<<8 | raw[3]) );
@@ -2330,7 +2330,7 @@ int icm45686_read_fifo_packet2(struct icm45686_desc *desc)
 {
     if (desc == NULL) return 1;
     uint8_t raw[16];
-    _ROE(icm45686_get_fifo_data(desc, raw, 16));
+    _ROE(icm45686_read_fifo_data(desc, raw, 16));
     desc->header0 = raw[0];
     desc->raw_accel.x = (int32_t)( (int16_t)((uint16_t)raw[2]<<8 | raw[1]) );
     desc->raw_accel.y = (int32_t)( (int16_t)((uint16_t)raw[4]<<8 | raw[3]) );
@@ -2347,7 +2347,7 @@ int icm45686_read_fifo_packet3(struct icm45686_desc *desc)
 {
     if (desc == NULL) return 1;
     uint8_t raw[20];
-    _ROE(icm45686_get_fifo_data(desc, raw, 20));
+    _ROE(icm45686_read_fifo_data(desc, raw, 20));
     desc->header0 = raw[0];
     desc->raw_accel.x = (int32_t)( (int16_t)((uint16_t)raw[2]<<12 | (uint16_t)raw[1]<<4 | (raw[17]>>4)) );
     desc->raw_accel.y = (int32_t)( (int16_t)((uint16_t)raw[4]<<12 | (uint16_t)raw[3]<<4 | (raw[18]>>4)) );
@@ -2365,7 +2365,7 @@ int icm45686_read_fifo_packet4(struct icm45686_desc *desc)
 {
     if (desc == NULL) return 1;
     uint8_t raw[16];
-    _ROE(icm45686_get_fifo_data(desc, raw, 16));
+    _ROE(icm45686_read_fifo_data(desc, raw, 16));
     desc->header0 = raw[0];
     desc->header1 = raw[1];
     for (int i=0; i<6; i++) desc->es0_data[i] = raw[i+2];
@@ -2376,7 +2376,7 @@ int icm45686_read_fifo_packet5(struct icm45686_desc *desc)
 {
     if (desc == NULL) return 1;
     uint8_t raw[16];
-    _ROE(icm45686_get_fifo_data(desc, raw, 16));
+    _ROE(icm45686_read_fifo_data(desc, raw, 16));
     desc->header0 = raw[0];
     desc->header1 = raw[1];
     for (int i=0; i<9; i++) desc->es0_data[i] = raw[i+2];
@@ -2387,7 +2387,7 @@ int icm45686_read_fifo_packet6(struct icm45686_desc *desc)
 {
     if (desc == NULL) return 1;
     uint8_t raw[16];
-    _ROE(icm45686_get_fifo_data(desc, raw, 16));
+    _ROE(icm45686_read_fifo_data(desc, raw, 16));
     desc->header0 = raw[0];
     desc->header1 = raw[1];
     for (int i=0; i<6; i++) desc->es1_data[i] = raw[i+2];
@@ -2398,7 +2398,7 @@ int icm45686_read_fifo_packet7(struct icm45686_desc *desc)
 {
     if (desc == NULL) return 1;
     uint8_t raw[20];
-    _ROE(icm45686_get_fifo_data(desc, raw, 20));
+    _ROE(icm45686_read_fifo_data(desc, raw, 20));
     desc->header0 = raw[0];
     desc->header1 = raw[1];
     for (int i=0; i<6; i++) desc->es0_data[i] = raw[i+2];
@@ -2410,7 +2410,7 @@ int icm45686_read_fifo_packet8(struct icm45686_desc *desc)
 {
     if (desc == NULL) return 1;
     uint8_t raw[20];
-    _ROE(icm45686_get_fifo_data(desc, raw, 20));
+    _ROE(icm45686_read_fifo_data(desc, raw, 20));
     desc->header0 = raw[0];
     desc->header1 = raw[1];
     for (int i=0; i<9; i++) desc->es0_data[i] = raw[i+2];
@@ -2422,7 +2422,7 @@ int icm45686_read_fifo_packet9(struct icm45686_desc *desc)
 {
     if (desc == NULL) return 1;
     uint8_t raw[32];
-    _ROE(icm45686_get_fifo_data(desc, raw, 32));
+    _ROE(icm45686_read_fifo_data(desc, raw, 32));
     desc->header0 = raw[0];
     desc->header1 = raw[1];
     desc->raw_accel.x = (int32_t)( (int16_t)((uint16_t)raw[3]<<8 | raw[2]) );
@@ -2442,7 +2442,7 @@ int icm45686_read_fifo_packet10(struct icm45686_desc *desc)
 {
     if (desc == NULL) return 1;
     uint8_t raw[32];
-    _ROE(icm45686_get_fifo_data(desc, raw, 32));
+    _ROE(icm45686_read_fifo_data(desc, raw, 32));
     desc->header0 = raw[0];
     desc->header1 = raw[1];
     desc->raw_accel.x = (int32_t)( (int16_t)((uint16_t)raw[3]<<8 | raw[2]) );
@@ -2488,4 +2488,31 @@ int icm45686_read_fifo_packet(struct icm45686_desc *desc)
     default:
         return 2;
     }
+}
+
+int icm45686_get_accel_int16(struct icm45686_desc *desc, struct icm45686_xyz_int16 *raw_la)
+{
+    if (desc == NULL || raw_la == NULL) return 1;
+    if (desc->hires_en != 0)
+    {
+        raw_la->x = (int16_t)(desc->raw_accel.x >> 4);
+        raw_la->y = (int16_t)(desc->raw_accel.y >> 4);
+        raw_la->z = (int16_t)(desc->raw_accel.z >> 4);
+    }
+    else
+    {
+        raw_la->x = (int16_t)desc->raw_accel.x;
+        raw_la->y = (int16_t)desc->raw_accel.y;
+        raw_la->z = (int16_t)desc->raw_accel.z;
+    }
+    return 0;
+}
+
+int icm45686_get_accel_int32(struct icm45686_desc *desc, struct icm45686_xyz_int32 *raw_la)
+{
+    if (desc == NULL || raw_la == NULL) return 1;
+    raw_la->x = desc->raw_accel.x;
+    raw_la->y = desc->raw_accel.y;
+    raw_la->z = desc->raw_accel.z;
+    return 0;
 }

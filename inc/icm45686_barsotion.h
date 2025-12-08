@@ -10,18 +10,18 @@ extern "C" {
 #include "icm45686_regconst.h"
 #include "icm45686_types.h"
 
-int icm45686_get_accel(struct icm45686_desc *desc, int16_t *la);
-int icm45686_get_accel_x(struct icm45686_desc *desc, int16_t *la);
-int icm45686_get_accel_y(struct icm45686_desc *desc, int16_t *la);
-int icm45686_get_accel_z(struct icm45686_desc *desc, int16_t *la);
-int icm45686_get_gyro(struct icm45686_desc *desc, int16_t *av);
-int icm45686_get_gyro_x(struct icm45686_desc *desc, int16_t *av);
-int icm45686_get_gyro_y(struct icm45686_desc *desc, int16_t *av);
-int icm45686_get_gyro_z(struct icm45686_desc *desc, int16_t *av);
-int icm45686_get_temp(struct icm45686_desc *desc, int16_t *temp);
-int icm45686_get_tmst(struct icm45686_desc *desc, int16_t *tmst);
-int icm45686_get_fifo_count(struct icm45686_desc *desc, uint16_t *fifo_cnt);
-int icm45686_get_fifo_data(struct icm45686_desc *desc, uint8_t *dst, int len);
+int icm45686_read_accel(struct icm45686_desc *desc, int16_t *la);
+int icm45686_read_accel_x(struct icm45686_desc *desc, int16_t *la);
+int icm45686_read_accel_y(struct icm45686_desc *desc, int16_t *la);
+int icm45686_read_accel_z(struct icm45686_desc *desc, int16_t *la);
+int icm45686_read_gyro(struct icm45686_desc *desc, int16_t *av);
+int icm45686_read_gyro_x(struct icm45686_desc *desc, int16_t *av);
+int icm45686_read_gyro_y(struct icm45686_desc *desc, int16_t *av);
+int icm45686_read_gyro_z(struct icm45686_desc *desc, int16_t *av);
+int icm45686_read_temp(struct icm45686_desc *desc, int16_t *temp);
+int icm45686_read_tmst(struct icm45686_desc *desc, int16_t *tmst);
+int icm45686_read_fifo_count(struct icm45686_desc *desc, uint16_t *fifo_cnt);
+int icm45686_read_fifo_data(struct icm45686_desc *desc, uint8_t *dst, int len);
 int icm45686_set_accel_mode(struct icm45686_desc *desc, const enum ACCEL_MODE mode);
 int icm45686_get_accel_mode(struct icm45686_desc *desc, enum ACCEL_MODE *mode);
 int icm45686_set_gyro_mode(struct icm45686_desc *desc, const enum GYRO_MODE mode);
@@ -259,6 +259,8 @@ int icm45686_read_fifo_packet8(struct icm45686_desc *desc);
 int icm45686_read_fifo_packet9(struct icm45686_desc *desc);
 int icm45686_read_fifo_packet10(struct icm45686_desc *desc);
 int icm45686_read_fifo_packet(struct icm45686_desc *desc);
+int icm45686_get_accel_int16(struct icm45686_desc *desc, struct icm45686_xyz_int16 *raw_la);
+int icm45686_get_accel_int32(struct icm45686_desc *desc, struct icm45686_xyz_int32 *raw_la);
 
 #if defined(__cplusplus)
 }

@@ -45,6 +45,11 @@ typedef struct icm45686_interrupt
     struct icm45686_intflag flags_en;
 } icm45686_interrupt_t;
 
+typedef struct icm45686_xyz_int16
+{
+    int16_t x, y, z;
+} icm45686_xyz_int16_t;
+
 typedef struct icm45686_xyz_int32
 {
     int32_t x, y, z;
@@ -67,6 +72,7 @@ typedef struct icm45686_desc
     uint16_t timestamp;
     uint8_t es0_data[9];
     uint8_t es1_data[6];
+    int hires_en;
 } icm45686_desc_t;
 
 typedef struct icm45686_cfg
