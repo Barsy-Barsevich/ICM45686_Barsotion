@@ -155,7 +155,7 @@ int icm45686_get_gyro_mode(struct icm45686_desc *desc, enum GYRO_MODE *mode)
     return 0;
 }
 
-int icm45686_set_int1_enable(struct icm45686_desc *desc, struct icm45686_intflag *cfg)
+int icm45686_set_int1_enable(struct icm45686_desc *desc, const struct icm45686_intflag *cfg)
 {
     if (desc == NULL || cfg == NULL) return 1;
     INT1_CONFIG0_t int1_config0 = {
@@ -1528,7 +1528,7 @@ int icm45686_get_tmst_delta_enable_status(struct icm45686_desc *desc, bool *stat
 
 
 
-int icm45686_set_int2_enable(struct icm45686_desc *desc, struct icm45686_intflag *cfg)
+int icm45686_set_int2_enable(struct icm45686_desc *desc, const struct icm45686_intflag *cfg)
 {
     if (desc == NULL || cfg == NULL) return 1;
     INT2_CONFIG0_t int2_config0 = {

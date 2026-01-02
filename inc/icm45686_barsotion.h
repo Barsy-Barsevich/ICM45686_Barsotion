@@ -26,7 +26,7 @@ int icm45686_set_accel_mode(struct icm45686_desc *desc, const enum ACCEL_MODE mo
 int icm45686_get_accel_mode(struct icm45686_desc *desc, enum ACCEL_MODE *mode);
 int icm45686_set_gyro_mode(struct icm45686_desc *desc, const enum GYRO_MODE mode);
 int icm45686_get_gyro_mode(struct icm45686_desc *desc, enum GYRO_MODE *mode);
-int icm45686_set_int1_enable(struct icm45686_desc *desc, struct icm45686_intflag *cfg);
+int icm45686_set_int1_enable(struct icm45686_desc *desc, const struct icm45686_intflag *cfg);
 int icm45686_get_int1_enable(struct icm45686_desc *desc, struct icm45686_intflag *cfg);
 int icm45686_set_int1_fifo_full_enable(struct icm45686_desc *desc);
 int icm45686_set_int1_fifo_full_disable(struct icm45686_desc *desc);
@@ -173,7 +173,7 @@ int icm45686_set_aux1_accel_scale(struct icm45686_desc *desc, enum ACCEL_AUX1_FS
 int icm45686_get_aux1_accel_scale(struct icm45686_desc *desc, enum ACCEL_AUX1_FS_SEL *scale);
 int icm45686_set_aux1_gyro_scale(struct icm45686_desc *desc, enum GYRO_AUX1_FS_SEL scale);
 int icm45686_set_aux1_gyro_scale(struct icm45686_desc *desc, enum GYRO_AUX1_FS_SEL scale);
-int icm45686_set_int2_enable(struct icm45686_desc *desc, struct icm45686_intflag *cfg);
+int icm45686_set_int2_enable(struct icm45686_desc *desc, const struct icm45686_intflag *cfg);
 int icm45686_get_int2_enable(struct icm45686_desc *desc, struct icm45686_intflag *cfg);
 int icm45686_set_int2_fifo_full_enable(struct icm45686_desc *desc);
 int icm45686_set_int2_fifo_full_disable(struct icm45686_desc *desc);
