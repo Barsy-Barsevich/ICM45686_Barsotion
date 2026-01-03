@@ -3,7 +3,8 @@ AR = ${PREFIX}-ar
 OBJDUMP = ${PREFIX}-objdump
 SIZE = ${PREFIX}-size
 
-build-debug:
+.PHONY: build-debug
+build-debug: clean
 	@echo '=====< Building ICM45686 library >=============='
 	@mkdir build || echo "INFO: 'build' directory has already created."
 	${CC} ${FLAGS} -ffunction-sections -I./inc -c src/icm45686_barsotion.c -o build/icm45686_barsotion.o
@@ -13,7 +14,8 @@ build-debug:
 	@echo '=====< Totals >================================='
 	@${SIZE} -t --format=berkeley libicm45686-barsotion-debug.a
 
-build:
+.PHONY: build
+build: clean
 	@echo '=====< Building ICM45686 library >=============='
 	@mkdir build || echo "'build' directory has already created."
 	${CC} ${FLAGS} -I./inc -c src/icm45686_barsotion.c -o build/icm45686_barsotion.o
