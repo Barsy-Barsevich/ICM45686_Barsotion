@@ -22,7 +22,7 @@ build: clean
 	@echo '=====< Creating an archive >===================='
 	${AR} rcs libicm45686-barsotion.a build/*
 	@echo '=====< Totals >================================='
-	@${SIZE} -t --format=gnu libicm45686-barsotion.a
+	@${SIZE} -t --format=berkeley libicm45686-barsotion.a
 
 clean:
 	@rm -r build || echo "INFO: no 'build' directory found."
