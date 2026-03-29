@@ -43,6 +43,7 @@ typedef struct INT1_CONFIG2
     enum INT_POLARITY polarity:1;
     enum INT_MODE mode:1;
     enum INT_DRIVE drive:1;
+    uint8_t __dummy:5;
 } INT1_CONFIG2_t;
 
 typedef struct INT1_STATUS0
@@ -352,6 +353,7 @@ typedef struct INT2_CONFIG2
     enum INT_POLARITY polarity:1;
     enum INT_MODE mode:1;
     enum INT_DRIVE drive:1;
+    uint8_t dummy:5;
 } INT2_CONFIG2_t;
 
 typedef struct INT2_STATUS0
