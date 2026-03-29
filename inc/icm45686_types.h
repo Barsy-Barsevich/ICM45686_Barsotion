@@ -73,6 +73,8 @@ typedef struct icm45686_desc
     uint8_t es0_data[9];
     uint8_t es1_data[6];
     int hires_en;
+    float accel_conv_coef;
+    float gyro_conv_coef;
 } icm45686_desc_t;
 
 typedef struct icm45686_cfg
@@ -98,3 +100,4 @@ typedef struct icm45686_cfg
     struct icm45686_interrupt int1;
     struct icm45686_interrupt int2;
 } icm45686_cfg;
+

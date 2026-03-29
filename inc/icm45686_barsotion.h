@@ -261,6 +261,10 @@ int icm45686_read_fifo_packet10(struct icm45686_desc *desc);
 int icm45686_read_fifo_packet(struct icm45686_desc *desc);
 int icm45686_get_accel_int16(struct icm45686_desc *desc, struct icm45686_xyz_int16 *raw_la);
 int icm45686_get_accel_int32(struct icm45686_desc *desc, struct icm45686_xyz_int32 *raw_la);
+int icm45686_get_accel_float(struct icm45686_desc *desc, struct icm45686_xyz_float *accel);
+int icm45686_get_gyro_int16(struct icm45686_desc *desc, struct icm45686_xyz_int16 *raw_lg);
+int icm45686_get_gyro_int32(struct icm45686_desc *desc, struct icm45686_xyz_int32 *raw_lg);
+int icm45686_get_gyro_float(struct icm45686_desc *desc, struct icm45686_xyz_float *gyro);
 
 #if defined(__cplusplus)
 }

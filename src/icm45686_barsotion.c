@@ -1,5 +1,6 @@
 #include "icm45686_barsotion.h"
 
+#include "icm45686_internal_const.h"
 #include "icm45686_regmap.h"
 #include "icm45686_regtypes.h"
 #include "icm45686_wheels.h"
@@ -867,6 +868,15 @@ int icm45686_set_ap_accel_scale(struct icm45686_desc *desc, const enum ACCEL_UI_
     _ROE(_read_register(ACCEL_CONFIG0, (uint8_t*)&accel_config0, 1));
     accel_config0.scale = scale;
     _ROE(_write_register(ACCEL_CONFIG0, (uint8_t*)&accel_config0, 1));
+    switch (scale)
+    {
+    case ACCEL_UI_SCALE_32G: desc->accel_conv_coef = ACCEL_CONV_COEF_32G; break;
+    case ACCEL_UI_SCALE_16G: desc->accel_conv_coef = ACCEL_CONV_COEF_16G; break;
+    case ACCEL_UI_SCALE_8G:  desc->accel_conv_coef = ACCEL_CONV_COEF_8G; break;
+    case ACCEL_UI_SCALE_4G:  desc->accel_conv_coef = ACCEL_CONV_COEF_4G; break;
+    case ACCEL_UI_SCALE_2G:  desc->accel_conv_coef = ACCEL_CONV_COEF_2G; break;
+	default: desc->accel_conv_coef = ACCEL_CONV_COEF_2G; break;
+    }
     return 0;
 }
 
@@ -905,6 +915,19 @@ int icm45686_set_ap_gyro_scale(struct icm45686_desc *desc, const enum GYRO_UI_FS
     _ROE(_read_register(GYRO_CONFIG0, (uint8_t*)&gyro_config0, 1));
     gyro_config0.scale = scale;
     _ROE(_write_register(GYRO_CONFIG0, (uint8_t*)&gyro_config0, 1));
+    switch (scale)
+    {
+    case GYRO_UI_SCALE_4000DPS:   desc->gyro_conv_coef = GYRO_CONV_COEF_4000DPS; break;
+    case GYRO_UI_SCALE_2000DPS:   desc->gyro_conv_coef = GYRO_CONV_COEF_2000DPS; break;
+    case GYRO_UI_SCALE_1000DPS:   desc->gyro_conv_coef = GYRO_CONV_COEF_1000DPS; break;
+    case GYRO_UI_SCALE_500DPS:    desc->gyro_conv_coef = GYRO_CONV_COEF_500DPS; break;
+    case GYRO_UI_SCALE_250DPS:    desc->gyro_conv_coef = GYRO_CONV_COEF_250DPS; break;
+    case GYRO_UI_SCALE_125DPS:    desc->gyro_conv_coef = GYRO_CONV_COEF_125DPS; break;
+    case GYRO_UI_SCALE_62P5DPS:   desc->gyro_conv_coef = GYRO_CONV_COEF_62P5DPS; break;
+    case GYRO_UI_SCALE_31P25DPS:  desc->gyro_conv_coef = GYRO_CONV_COEF_31P25DPS; break;
+    case GYRO_UI_SCALE_15P625DPS: desc->gyro_conv_coef = GYRO_CONV_COEF_15P625DPS; break;
+    default: desc->gyro_conv_coef = GYRO_CONV_COEF_500DPS; break;
+    }
     return 0;
 }
 
@@ -2516,3 +2539,49 @@ int icm45686_get_accel_int32(struct icm45686_desc *desc, struct icm45686_xyz_int
     raw_la->z = desc->raw_accel.z;
     return 0;
 }
+
+int icm45686_get_accel_float(struct icm45686_desc *desc, struct icm45686_xyz_float *accel)
+{
+	if (desc == NULL || accel == NULL) return 1;
+	accel->x = (float)desc->raw_accel.x * desc->accel_conv_coef;
+	accel->y = (float)desc->raw_accel.y * desc->accel_conv_coef;
+	accel->z = (float)desc->raw_accel.z * desc->accel_conv_coef;
+	return 0;
+}
+
+int icm45686_get_gyro_int16(struct icm45686_desc *desc, struct icm45686_xyz_int16 *raw_lg)
+{
+    if (desc == NULL || raw_lg == NULL) return 1;
+    if (desc->hires_en != 0)
+    {
+        raw_lg->x = (int16_t)(desc->raw_gyro.x >> 4);
+        raw_lg->y = (int16_t)(desc->raw_gyro.y >> 4);
+        raw_lg->z = (int16_t)(desc->raw_gyro.z >> 4);
+    }
+    else
+    {
+        raw_lg->x = (int16_t)desc->raw_gyro.x;
+        raw_lg->y = (int16_t)desc->raw_gyro.y;
+        raw_lg->z = (int16_t)desc->raw_gyro.z;
+    }
+    return 0;
+}
+
+int icm45686_get_gyro_int32(struct icm45686_desc *desc, struct icm45686_xyz_int32 *raw_lg)
+{
+    if (desc == NULL || raw_lg == NULL) return 1;
+    raw_lg->x = desc->raw_gyro.x;
+    raw_lg->y = desc->raw_gyro.y;
+    raw_lg->z = desc->raw_gyro.z;
+    return 0;
+}
+
+int icm45686_get_gyro_float(struct icm45686_desc *desc, struct icm45686_xyz_float *gyro)
+{
+	if (desc == NULL || gyro == NULL) return 1;
+	gyro->x = (float)desc->raw_gyro.x * desc->gyro_conv_coef;
+	gyro->y = (float)desc->raw_gyro.y * desc->gyro_conv_coef;
+	gyro->z = (float)desc->raw_gyro.z * desc->gyro_conv_coef;
+	return 0;
+}
+
