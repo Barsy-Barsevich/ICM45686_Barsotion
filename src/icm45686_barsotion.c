@@ -2585,3 +2585,11 @@ int icm45686_get_gyro_float(struct icm45686_desc *desc, struct icm45686_xyz_floa
 	return 0;
 }
 
+
+int icm45686_set_mclk_source(struct icm45686_desc *desc, enum OSC_ID_OVRD src)
+{
+	if (desc == NULL) return 1;
+	_ROE(_write_register(REG_MISC2, (uint8_t*)&src, 1));
+	return 0;
+}
+
