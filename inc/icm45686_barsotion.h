@@ -265,6 +265,7 @@ int icm45686_get_accel_float(struct icm45686_desc *desc, struct icm45686_xyz_flo
 int icm45686_get_gyro_int16(struct icm45686_desc *desc, struct icm45686_xyz_int16 *raw_lg);
 int icm45686_get_gyro_int32(struct icm45686_desc *desc, struct icm45686_xyz_int32 *raw_lg);
 int icm45686_get_gyro_float(struct icm45686_desc *desc, struct icm45686_xyz_float *gyro);
+int icm45686_set_mclk_source(struct icm45686_desc *desc, enum OSC_ID_OVRD src);
 
 #if defined(__cplusplus)
 }

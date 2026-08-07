@@ -2329,9 +2329,9 @@ int icm45686_read_fifo_packet0(struct icm45686_desc *desc)
     uint8_t raw[8];
     _ROE(icm45686_read_fifo_data(desc, raw, 8));
     desc->header0 = raw[0];
-    desc->raw_accel.x = (int32_t)( (int16_t)((uint16_t)raw[2]<<8 | raw[1]) );
-    desc->raw_accel.y = (int32_t)( (int16_t)((uint16_t)raw[4]<<8 | raw[3]) );
-    desc->raw_accel.z = (int32_t)( (int16_t)((uint16_t)raw[6]<<8 | raw[5]) );
+    desc->raw_accel.x = (int32_t)( (uint32_t)raw[2]<<8 | raw[1] );
+    desc->raw_accel.y = (int32_t)( (uint32_t)raw[4]<<8 | raw[3] );
+    desc->raw_accel.z = (int32_t)( (uint32_t)raw[6]<<8 | raw[5] );
     desc->temp0 = raw[7];
     return 0;
 }
@@ -2342,9 +2342,9 @@ int icm45686_read_fifo_packet1(struct icm45686_desc *desc)
     uint8_t raw[8];
     _ROE(icm45686_read_fifo_data(desc, raw, 8));
     desc->header0 = raw[0];
-    desc->raw_gyro.x = (int32_t)( (int16_t)((uint16_t)raw[2]<<8 | raw[1]) );
-    desc->raw_gyro.y = (int32_t)( (int16_t)((uint16_t)raw[4]<<8 | raw[3]) );
-    desc->raw_gyro.z = (int32_t)( (int16_t)((uint16_t)raw[6]<<8 | raw[5]) );
+    desc->raw_gyro.x = (int32_t)( (uint32_t)raw[2]<<8 | raw[1] );
+    desc->raw_gyro.y = (int32_t)( (uint32_t)raw[4]<<8 | raw[3] );
+    desc->raw_gyro.z = (int32_t)( (uint32_t)raw[6]<<8 | raw[5] );
     desc->temp0 = raw[7];
     return 0;
 }
@@ -2355,12 +2355,12 @@ int icm45686_read_fifo_packet2(struct icm45686_desc *desc)
     uint8_t raw[16];
     _ROE(icm45686_read_fifo_data(desc, raw, 16));
     desc->header0 = raw[0];
-    desc->raw_accel.x = (int32_t)( (int16_t)((uint16_t)raw[2]<<8 | raw[1]) );
-    desc->raw_accel.y = (int32_t)( (int16_t)((uint16_t)raw[4]<<8 | raw[3]) );
-    desc->raw_accel.z = (int32_t)( (int16_t)((uint16_t)raw[6]<<8 | raw[5]) );
-    desc->raw_gyro.x = (int32_t)( (int16_t)((uint16_t)raw[8]<<8 | raw[7]) );
-    desc->raw_gyro.y = (int32_t)( (int16_t)((uint16_t)raw[10]<<8 | raw[9]) );
-    desc->raw_gyro.z = (int32_t)( (int16_t)((uint16_t)raw[12]<<8 | raw[11]) );
+    desc->raw_accel.x = (int32_t)( (uint32_t)raw[2]<<8 | raw[1] );
+    desc->raw_accel.y = (int32_t)( (uint32_t)raw[4]<<8 | raw[3] );
+    desc->raw_accel.z = (int32_t)( (uint32_t)raw[6]<<8 | raw[5] );
+    desc->raw_gyro.x = (int32_t)( (uint32_t)raw[8]<<8 | raw[7] );
+    desc->raw_gyro.y = (int32_t)( (uint32_t)raw[10]<<8 | raw[9] );
+    desc->raw_gyro.z = (int32_t)( (uint32_t)raw[12]<<8 | raw[11] );
     desc->temp0 = raw[13];
     desc->timestamp = (uint16_t)raw[14]<<8 | raw[15];
     return 0;
@@ -2372,12 +2372,12 @@ int icm45686_read_fifo_packet3(struct icm45686_desc *desc)
     uint8_t raw[20];
     _ROE(icm45686_read_fifo_data(desc, raw, 20));
     desc->header0 = raw[0];
-    desc->raw_accel.x = (int32_t)( (int16_t)((uint16_t)raw[2]<<12 | (uint16_t)raw[1]<<4 | (raw[17]>>4)) );
-    desc->raw_accel.y = (int32_t)( (int16_t)((uint16_t)raw[4]<<12 | (uint16_t)raw[3]<<4 | (raw[18]>>4)) );
-    desc->raw_accel.z = (int32_t)( (int16_t)((uint16_t)raw[6]<<12 | (uint16_t)raw[5]<<4 | (raw[19]>>4)) );
-    desc->raw_gyro.x = (int32_t)( (int16_t)((uint16_t)raw[8]<<12 | (uint16_t)raw[7]<<4 | (raw[17]&0xF)) );
-    desc->raw_gyro.y = (int32_t)( (int16_t)((uint16_t)raw[10]<<12 | (uint16_t)raw[9]<<4 | (raw[18]&0xF)) );
-    desc->raw_gyro.z = (int32_t)( (int16_t)((uint16_t)raw[12]<<12 | (uint16_t)raw[11]<<4 | (raw[19]&0xF)) );
+    desc->raw_accel.x = (int32_t)( (uint32_t)raw[2]<<12 | (uint32_t)raw[1]<<4 | (raw[17]>>4) );
+    desc->raw_accel.y = (int32_t)( (uint32_t)raw[4]<<12 | (uint32_t)raw[3]<<4 | (raw[18]>>4) );
+    desc->raw_accel.z = (int32_t)( (uint32_t)raw[6]<<12 | (uint32_t)raw[5]<<4 | (raw[19]>>4) );
+    desc->raw_gyro.x = (int32_t)( (uint32_t)raw[8]<<12 | (uint32_t)raw[7]<<4 | (raw[17]&0xF) );
+    desc->raw_gyro.y = (int32_t)( (uint32_t)raw[10]<<12 | (uint32_t)raw[9]<<4 | (raw[18]&0xF) );
+    desc->raw_gyro.z = (int32_t)( (uint32_t)raw[12]<<12 | (uint32_t)raw[11]<<4 | (raw[19]&0xF) );
     desc->temp0 = raw[13];
     desc->temp1 = raw[14];
     desc->timestamp = (uint16_t)raw[16]<<8 | raw[15];
@@ -2582,6 +2582,14 @@ int icm45686_get_gyro_float(struct icm45686_desc *desc, struct icm45686_xyz_floa
 	gyro->x = (float)desc->raw_gyro.x * desc->gyro_conv_coef;
 	gyro->y = (float)desc->raw_gyro.y * desc->gyro_conv_coef;
 	gyro->z = (float)desc->raw_gyro.z * desc->gyro_conv_coef;
+	return 0;
+}
+
+
+int icm45686_set_mclk_source(struct icm45686_desc *desc, enum OSC_ID_OVRD src)
+{
+	if (desc == NULL) return 1;
+	_ROE(_write_register(REG_MISC2, (uint8_t*)&src, 1));
 	return 0;
 }
 
